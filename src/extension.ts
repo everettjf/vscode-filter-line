@@ -42,50 +42,30 @@ export function deactivate() {
 
 class FilterLineBase{
 
-    public showInfo(text: string){
+    protected showInfo(text: string){
         vscode.window.showInformationMessage(text);
     }
-    public showError(text: string){
+    protected showError(text: string){
         vscode.window.showErrorMessage(text);
     }
 
-
-}
-class FilterLineWithOneRegex extends FilterLineBase{
-    private _regex?: RegExp;
-
-    public filter(){
-
+    protected getValidDocument(): vscode.TextDocument | undefined{
         let editor = vscode.window.activeTextEditor;
         if(!editor){
             this.showError('No file selected');
-            return;
+            return undefined;
         }
 
         let doc = editor.document;
         console.log(doc.languageId);
         if(doc.isDirty){
             this.showError('Save before filter line');
-            return;
+            return undefined;
         }
-        
-        vscode.window.showInputBox().then(text => {
-            if(text === undefined || text === ''){
-                console.log('No input');
-                return;
-            }
-            console.log('input : ' + text);
-            console.log('file : ' + doc.fileName);
-
-            this._regex = new RegExp(text);
-
-            this.filterFile(doc.fileName);
-        });
-    }
-    dispose(){
+        return doc;
     }
 
-    private filterFile(filePath: string){
+    protected filterFile(filePath: string){
         // read file
         const readline = require('readline');
         const fs = require('fs');
@@ -124,7 +104,49 @@ class FilterLineWithOneRegex extends FilterLineBase{
         });
     }
 
-    private matchLine(line: string) : boolean{
+    protected matchLine(text: string): boolean{
+        return false;
+    }
+
+    protected prepare(callback : (succeed: boolean)=>void){
+    }
+    public filter(){
+        let doc = this.getValidDocument();
+        if(doc === undefined){
+            return;
+        }
+        console.log('file : ' + doc.fileName);
+
+        this.prepare((succeed)=>{
+            if(!succeed){
+                return;
+            }
+            if(doc === undefined){
+                return;
+            }
+
+            this.filterFile(doc.fileName);
+        });
+    }
+}
+class FilterLineWithOneRegex extends FilterLineBase{
+    private _regex?: RegExp;
+
+    protected prepare(callback : (succeed: boolean)=>void){
+        vscode.window.showInputBox().then(text => {
+            if(text === undefined || text === ''){
+                console.log('No input');
+                callback(false);
+                return;
+            }
+            console.log('input : ' + text);
+
+            this._regex = new RegExp(text);
+            callback(true);
+        });
+    }
+
+    protected matchLine(line: string) : boolean{
         if(this._regex === undefined){
             return false;
         }
@@ -133,20 +155,14 @@ class FilterLineWithOneRegex extends FilterLineBase{
         }
         return false;
     }
+
+    dispose(){
+    }
 }
 
 class FilterLineWithRegexConfig extends FilterLineBase{
-    public filter(){
-        let editor = vscode.window.activeTextEditor;
-        if(!editor){
-            this.showError('No file selected');
-            return;
-        }
-
-        let doc = editor.document;
-        let docContent = doc.getText()
-        console.log(doc.languageId);
-        console.log(docContent);
+    protected prepare(callback : (succeed: boolean)=>void){
+        callback(true);
     }
 
     dispose(){
