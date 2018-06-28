@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -51,6 +52,7 @@ class FilterLineBase{
 
 }
 class FilterLineWithOneRegex extends FilterLineBase{
+    private _regex?: RegExp;
 
     public filter(){
 
@@ -67,30 +69,69 @@ class FilterLineWithOneRegex extends FilterLineBase{
             return;
         }
         
-
         vscode.window.showInputBox().then(text => {
             if(text === undefined || text === ''){
                 console.log('No input');
                 return;
             }
             console.log('input : ' + text);
-            console.log(doc.uri);
-            console.log(doc.fileName);
+            console.log('file : ' + doc.fileName);
 
-            this.filterFile(doc.fileName, text);
+            this._regex = new RegExp(text);
+
+            this.filterFile(doc.fileName);
         });
     }
     dispose(){
     }
 
-    private filterFile(filePath: string, regexText: string){
+    private filterFile(filePath: string){
         // read file
+        const readline = require('readline');
+        const fs = require('fs');
+        var path = require('path');
 
-        // filter line by line
+        const rl = readline.createInterface({
+            input: fs.createReadStream(filePath)
+        });
 
-        // write to file
+        let outputPath = filePath + '.filterline' + path.extname(filePath);
+        console.log('output : ' + outputPath);
+        if(fs.existsSync(outputPath)){
+            console.log('output file already exist, force delete');
+            fs.unlinkSync(outputPath);
+        }
 
-        // open file
+        // open write file
+        let output = fs.createWriteStream(outputPath);
+        output.on('open', ()=>{
+            // filter line by line
+            rl.on('line', (line: string)=>{
+                
+                console.log('line ', line);
+                if(this.matchLine(line)){
+                    output.write(line + '\n');
+                }
+
+            }).on('close',()=>{
+                console.log('finish');
+                this.showInfo('complete');
+                vscode.workspace.openTextDocument(outputPath).then((doc: vscode.TextDocument)=>{
+                    console.log('opened');
+                    vscode.window.showTextDocument(doc);
+                });
+            });
+        });
+    }
+
+    private matchLine(line: string) : boolean{
+        if(this._regex === undefined){
+            return false;
+        }
+        if(line.match(this._regex) !== null){
+            return true;
+        }
+        return false;
     }
 }
 
