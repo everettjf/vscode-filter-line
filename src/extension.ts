@@ -47,6 +47,8 @@ class FilterLineBase{
     public showError(text: string){
         vscode.window.showErrorMessage(text);
     }
+
+
 }
 class FilterLineWithOneRegex extends FilterLineBase{
 
@@ -59,12 +61,36 @@ class FilterLineWithOneRegex extends FilterLineBase{
         }
 
         let doc = editor.document;
-        let docContent = doc.getText()
         console.log(doc.languageId);
-        console.log(docContent);
+        if(doc.isDirty){
+            this.showError('Save before filter line');
+            return;
+        }
+        
 
+        vscode.window.showInputBox().then(text => {
+            if(text === undefined || text === ''){
+                console.log('No input');
+                return;
+            }
+            console.log('input : ' + text);
+            console.log(doc.uri);
+            console.log(doc.fileName);
+
+            this.filterFile(doc.fileName, text);
+        });
     }
     dispose(){
+    }
+
+    private filterFile(filePath: string, regexText: string){
+        // read file
+
+        // filter line by line
+
+        // write to file
+
+        // open file
     }
 }
 
