@@ -128,6 +128,22 @@ class FilterLineBase{
             this.filterFile(doc.fileName);
         });
     }
+
+    public readJsonFile(filePath: string): object | undefined{
+        var fs = require('fs');
+        var content = fs.readFileSync(filePath);
+        // console.log('content : ' + content);
+        if(!content){
+            return undefined;
+        }
+        try{
+            var json = JSON.parse(content);
+            return json;
+        }catch(e){
+            console.log('json parse error : ' + e);
+        }
+        return undefined;
+    }
 }
 class FilterLineWithOneRegex extends FilterLineBase{
     private _regex?: RegExp;
@@ -162,7 +178,37 @@ class FilterLineWithOneRegex extends FilterLineBase{
 
 class FilterLineWithRegexConfig extends FilterLineBase{
     protected prepare(callback : (succeed: boolean)=>void){
-        callback(true);
+        var path = require('path');
+
+        let editor = vscode.window.activeTextEditor;
+        if(!editor){
+            this.showError('No file selected');
+            callback(false);
+            return;
+        }
+
+        let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+        if(!workspaceFolder){
+            callback(false);
+            return;
+        }
+        let workspacePath = workspaceFolder.uri.fsPath;
+        let configPath = path.join(workspacePath,'.vscode','filterline.json');
+
+        console.log('config path : ');
+        console.log(configPath);
+
+        let config = this.readJsonFile(configPath);
+        if(!config){
+            this.showError('Can not read config file in ' + configPath);
+            console.log('failed read ' + configPath);
+            callback(false);
+            return;
+        }
+        console.log('config:');
+        console.log(config);
+
+        callback(false);
     }
 
     dispose(){
