@@ -277,6 +277,7 @@ class FilterLineWithRegexConfig extends FilterLineBase{
                     prefixstring += ' ';
                 }
                 content = res[res.length - 1];
+                content = content.trim();
             }
         }
         console.log('>new line');
@@ -327,6 +328,9 @@ class FilterLineWithRegexConfig extends FilterLineBase{
                 contentstring = content;
             }
 
+            flagstring = padwithblank(flagstring,4);
+            tagstring = padwithblank(tagstring,4);
+
             return prefixstring + ' ' + flagstring + ' ' + tagstring + ' ' + contentstring;
         }
 
@@ -336,3 +340,17 @@ class FilterLineWithRegexConfig extends FilterLineBase{
     dispose(){
     }
 }
+
+
+function padwithblank(str:string, length:number){
+    if(str.length > length){
+        return str;
+    }
+    let pad:string = '';
+    for(let i=0;i<length - str.length;i++){
+        pad+=' ';
+    }
+    
+    return pad + str;
+}
+
