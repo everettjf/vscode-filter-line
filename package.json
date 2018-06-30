@@ -16,14 +16,16 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.filterLineWithOneRegex",
-            "title": "Filter Line With One Regex"
-        },{
-            "command": "extension.filterLineWithRegexConfig",
-            "title": "Filter Line With Regex Config"
-        }
-    ]
+        "commands": [
+            {
+                "command": "extension.filterLineWithOneRegex",
+                "title": "Filter Line With One Regex"
+            },
+            {
+                "command": "extension.filterLineWithRegexConfig",
+                "title": "Filter Line With Regex Config"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
