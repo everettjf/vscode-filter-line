@@ -4,19 +4,19 @@
         {
             "src": "Extension",
             "dest": "extensionHost",
-            "prefix": "car",
+            "tag": "car",
             "flag": "fire"
         },
         {
             "src": "Extension",
             "dest": "extensionHost",
-            "prefix": "car",
+            "tag": "car",
             "flag": "fire"
         },
         {
             "src": "Extension",
             "dest": "extensionHost",
-            "prefix": "car",
+            "tag": "car",
             "flag": "fire",
             "until": ")"
         }
