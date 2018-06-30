@@ -327,7 +327,7 @@ class FilterLineWithRegexConfig extends FilterLineBase{
                 contentstring = content;
             }
 
-            return prefixstring + ' ' + flagstring.padStart(8) + ' ' + tagstring + ' ' + contentstring;
+            return prefixstring + ' ' + flagstring + ' ' + tagstring + ' ' + contentstring;
         }
 
         return undefined;
