@@ -2,9 +2,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import {FilterLineWithInputString} from './filter_inputstring';
-import {FilterLineWithInputRegex} from './filter_inputregex';
-import {FilterLineWithRegexConfig} from './filter_regexconfig';
+import {FilterLineWithInputString} from './filter_string';
+import {FilterLineWithInputRegex} from './filter_regex';
+import {FilterLineWithRegexConfig} from './filter_general';
 
 
 // this method is called when your extension is activated

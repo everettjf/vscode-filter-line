@@ -5,7 +5,7 @@
 
 // The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
-import { FLConfig} from '../flconfig';
+import { EVML} from '../evml';
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -28,7 +28,7 @@ suite("Extension Tests", function () {
 
     });
     test("Read fl config", function(done) {
-        let fl = new FLConfig();
+        let fl = new EVML();
         // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log0txt/.vscode/filterline.txt';
         // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log1txt/.vscode/filterline.txt';
         let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log2txt/.vscode/filterline.txt';
