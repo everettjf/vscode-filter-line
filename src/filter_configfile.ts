@@ -1,85 +1,63 @@
 'use strict';
 import * as vscode from 'vscode';
 import { FilterLineBase}  from './filter_base';
-import {padWithBlank, readJsonFile} from './util';
+import {padWithBlank} from './util';
+import {FilterConfigReader } from './config';
 
-
-class FilterLineWithRegexConfig extends FilterLineBase{
+class FilterLineWithConfigFile extends FilterLineBase{
     private _config?: any;
+    private _configType: string = '';
     private _flag: string = ""; // flag is global
 
     protected prepare(callback : (succeed: boolean)=>void){
-        var path = require('path');
-
-        let editor = vscode.window.activeTextEditor;
-        if(!editor){
-            this.showError('No file selected');
-            callback(false);
-            return;
-        }
-
-        let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
-        if(!workspaceFolder){
-            callback(false);
-            return;
-        }
-        let workspacePath = workspaceFolder.uri.fsPath;
-        let configPath = path.join(workspacePath,'.vscode','filterline.json');
-
-        console.log('config path : ');
-        console.log(configPath);
-
-        this._config = readJsonFile(configPath);
-        if(!this._config){
-            this.showError('Can not read config file in ' + configPath);
-            console.log('failed read ' + configPath);
-            callback(false);
-            return;
-        }
-        // console.log('config:');
-        // console.log(this._config);
-
-        if(!this._config['rules']){
-            this.showError('No rules in config file : ' + configPath);
-            callback(false);
-            return;
-        }
-
-        if(this._config['prefix']){
-            try{
-                this._config['_prefix_regex'] = new RegExp(this._config['prefix'] + '(.+)');
-            }catch(e){
-                this.showError('prefix regex incorrect : ' + configPath);
+        let configReader: FilterConfigReader = new FilterConfigReader();
+        configReader.read((succeed,errorinfo)=>{
+            if(!succeed){
+                this.showError(errorinfo);
                 callback(false);
                 return;
             }
-        }
 
-        for(let rule of this._config['rules']){
-            try{
-                rule['_src_regex'] = new RegExp(rule['src']);
-            }catch(e){
-                this.showError('src regex incorrect : ' + rule['src']);
-                callback(false);
-                return;
-            }
-            if(rule['until']){
-                try{
-                    rule['_until_regex'] = new RegExp(rule['until']);
-                }catch(e){
-                    this.showError('until regex incorrect : ' + rule['until']);
-                    callback(false);
-                    return;
-                }
-            }
-        }
-        console.log('fixed config:');
-        console.log(this._config);
+            this._config = configReader.getConfig();
+            this._configType = configReader.getConfigType();
 
-        callback(true);
+            console.log('fixed config:');
+            console.log(this._config);
+
+            callback(true);
+        });
+    }
+    protected matchLine(line: string): string | undefined{
+        if(this._configType === 'general'){
+            return this.matchLineGeneral(line);
+        }else if(this._configType === 'regexlist'){
+            return this.matchLineRegexList(line);
+        }else if(this._configType === 'stringlist'){
+            return this.matchLineStringList(line);
+        }
+        return undefined;
     }
 
-    protected matchLine(line: string): string | undefined{
+    protected matchLineRegexList(line: string): string | undefined{
+        for(let rule of this._config['rules']){
+            let res = line.match(rule);
+            if(res){
+                return line;
+            }
+        }
+        return undefined;
+    }
+
+    protected matchLineStringList(line: string): string | undefined{
+        for(let rule of this._config['rules']){
+            if(line.indexOf(rule) !== -1){
+                return line;
+            }
+        }
+        return undefined;
+    }
+
+    protected matchLineGeneral(line: string): string | undefined{
         if(this._config === undefined){
             return undefined;
         }
@@ -169,4 +147,4 @@ class FilterLineWithRegexConfig extends FilterLineBase{
 }
 
 
-export { FilterLineWithRegexConfig};
+export { FilterLineWithConfigFile};

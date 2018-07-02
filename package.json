@@ -13,7 +13,7 @@
     "activationEvents": [
         "onCommand:extension.filterLineWithInputString",
         "onCommand:extension.filterLineWithInputRegex",
-        "onCommand:extension.filterLineWithRegexConfig"
+        "onCommand:extension.filterLineWithConfigFile"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -27,8 +27,8 @@
                 "title": "Filter Line With Input Regex"
             },
             {
-                "command": "extension.filterLineWithRegexConfig",
-                "title": "Filter Line With Regex Config"
+                "command": "extension.filterLineWithConfigFile",
+                "title": "Filter Line With Config File"
             }
         ]
     },
