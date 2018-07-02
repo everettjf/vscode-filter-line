@@ -38,10 +38,4 @@ There are 3 format types. As they are so simple, I will not describe them here. 
 3. `general`: This is default if `type` is not specified. [json format](demo/log2json/.vscode/filterline.json) [eoml format](demo/log2eoml/.vscode/filterline.eoml)
 
 
-## Release Notes
-
-### 0.0.1
-
-Initial release
-
 **Enjoy!**

@@ -2,7 +2,7 @@
     "name": "filter-line",
     "displayName": "Filter Line",
     "description": "Filter line by strings or regular expressions",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "everettjf",
     "engines": {
         "vscode": "^1.24.0"
