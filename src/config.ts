@@ -1,6 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
-import {EVML} from './evml';
+import {ECML} from './ecml';
 import {readJsonFile} from './util';
 
 class FilterConfigReader{
@@ -59,7 +59,7 @@ class FilterConfigReader{
             });
         }else{
             // evml or txt
-            let parser = new EVML();
+            let parser = new ECML();
             parser.parse(this._configPath, (succeed,errorinfo)=>{
                 if(!succeed){
                     callback(false,'parse file failed : ' + errorinfo);

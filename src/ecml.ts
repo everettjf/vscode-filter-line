@@ -1,10 +1,10 @@
 'use strict';
 // 
-// EVerett's Markup Language
+// Everett's Config Minimal Language
 // 
 
 
-class EVML{
+class ECML{
     protected _value: any = {};
     protected _isArrayMode: boolean = false;
     protected _currentArrayItem?: any;
@@ -112,4 +112,4 @@ function evml_split(str:string, sep:string): [string,string] | undefined{
     return ret;
 }
 
-export { EVML, evml_split};
+export { ECML, evml_split};
