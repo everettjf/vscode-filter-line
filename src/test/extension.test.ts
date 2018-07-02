@@ -30,8 +30,8 @@ suite("Extension Tests", function () {
     test("Read fl config", function(done) {
         let fl = new FLConfig();
         // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log0txt/.vscode/filterline.txt';
-        let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log1txt/.vscode/filterline.txt';
-        // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log2txt/.vscode/filterline.txt';
+        // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log1txt/.vscode/filterline.txt';
+        let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log2txt/.vscode/filterline.txt';
         fl.parse(filepath,(succeed,errorinfo)=>{
             console.log(succeed);
             console.log(errorinfo);
