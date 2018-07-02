@@ -1,6 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
-import {ECML} from './ecml';
+import {EOML} from './eoml';
 import {readJsonFile} from './util';
 
 class FilterConfigReader{
@@ -31,12 +31,12 @@ class FilterConfigReader{
             return;
         }
         let workspacePath = workspaceFolder.uri.fsPath;
-        let evmlConfigPath = path.join(workspacePath,'.vscode','filterline.evml');
+        let eomlConfigPath = path.join(workspacePath,'.vscode','filterline.eoml');
         let txtConfigPath = path.join(workspacePath,'.vscode','filterline.txt');
         let jsonConfigPath = path.join(workspacePath,'.vscode','filterline.json');
 
-        if(fs.existsSync(evmlConfigPath)){
-            this._configPath = evmlConfigPath;
+        if(fs.existsSync(eomlConfigPath)){
+            this._configPath = eomlConfigPath;
         }else if(fs.existsSync(txtConfigPath)){
             this._configPath = txtConfigPath;
         }else{
@@ -58,8 +58,8 @@ class FilterConfigReader{
                 callback(succeed,errorinfo);
             });
         }else{
-            // evml or txt
-            let parser = new ECML();
+            // eoml or txt
+            let parser = new EOML();
             parser.parse(this._configPath, (succeed,errorinfo)=>{
                 if(!succeed){
                     callback(false,'parse file failed : ' + errorinfo);

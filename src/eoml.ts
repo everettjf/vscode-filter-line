@@ -1,10 +1,10 @@
 'use strict';
 // 
-// Everett's Config Minimal Language
+// Everett's Obvious Minimal Language
 // 
 
 
-class ECML{
+class EOML{
     protected _value: any = {};
     protected _isArrayMode: boolean = false;
     protected _currentArrayItem?: any;
@@ -61,7 +61,7 @@ class ECML{
                 return;
             }
 
-            let parts = ecml_split(trimmedline,':');
+            let parts = eoml_split(trimmedline,':');
             if(parts === undefined){
                 // no kv, so check if array mode
                 // if array node , directly push as string
@@ -96,7 +96,7 @@ class ECML{
     }
 }
 
-function ecml_split(str:string, sep:string): [string,string] | undefined{
+function eoml_split(str:string, sep:string): [string,string] | undefined{
 
     let index = str.indexOf(sep);
     // no sep
@@ -112,4 +112,4 @@ function ecml_split(str:string, sep:string): [string,string] | undefined{
     return ret;
 }
 
-export { ECML, ecml_split};
+export { EOML, eoml_split};
