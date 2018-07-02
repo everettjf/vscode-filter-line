@@ -40,7 +40,7 @@ There are 3 format types. As they are so simple, I will not describe them here. 
 
 ## Release Notes
 
-### 1.0.0
+### 0.0.1
 
 Initial release
 
