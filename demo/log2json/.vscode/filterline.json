@@ -13,13 +13,13 @@
             "flag": ""
         },
         {
-            "src": "Framework app launch complete (\\.+)",
+            "src": "Framework app launch complete (.+)",
             "dest": "App启动完成",
             "tag": "----",
             "flag": ""
         },
         {
-            "src": "ViewController (\\.+) view did appear",
+            "src": "ViewController (.+) view did appear",
             "dest": "VC显示",
             "tag": "",
             "flag": ""
