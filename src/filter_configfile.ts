@@ -23,8 +23,8 @@ class FilterLineWithConfigFile extends FilterLineBase{
             this._config = configReader.getConfig();
             this._configType = configReader.getConfigType();
 
-            console.log('fixed config:');
-            console.log(this._config);
+            // console.log('fixed config:');
+            // console.log(this._config);
 
             callback(true);
         });
@@ -77,13 +77,13 @@ class FilterLineWithConfigFile extends FilterLineBase{
         let prefixstring = '';
         let content = line;
         let prefix_regex = this._config['_prefix_regex'];
-        console.log('----------------------');
-        console.log('prefix regex : ' + prefix_regex);
-        console.log('line : ' + line);
+        // console.log('----------------------');
+        // console.log('prefix regex : ' + prefix_regex);
+        // console.log('line : ' + line);
         if(prefix_regex){
             let res: any = line.match(prefix_regex);
-            console.log('prefix match :' + res);
-            console.log('line :' + line);
+            // console.log('prefix match :' + res);
+            // console.log('line :' + line);
 
             // not match prefix , just return (except until)
             if(!res){
@@ -98,9 +98,9 @@ class FilterLineWithConfigFile extends FilterLineBase{
                 content = content.trim();
             }
         }
-        console.log('>new line');
-        console.log('prefix : ' + prefixstring);
-        console.log('content : ' + content);
+        // console.log('>new line');
+        // console.log('prefix : ' + prefixstring);
+        // console.log('content : ' + content);
 
         for(let rule of this._config['rules']){
             let src_regex: RegExp = rule['_src_regex'];
