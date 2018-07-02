@@ -61,7 +61,7 @@ class ECML{
                 return;
             }
 
-            let parts = evml_split(trimmedline,':');
+            let parts = ecml_split(trimmedline,':');
             if(parts === undefined){
                 // no kv, so check if array mode
                 // if array node , directly push as string
@@ -96,7 +96,7 @@ class ECML{
     }
 }
 
-function evml_split(str:string, sep:string): [string,string] | undefined{
+function ecml_split(str:string, sep:string): [string,string] | undefined{
 
     let index = str.indexOf(sep);
     // no sep
@@ -112,4 +112,4 @@ function evml_split(str:string, sep:string): [string,string] | undefined{
     return ret;
 }
 
-export { ECML, evml_split};
+export { ECML, ecml_split};
