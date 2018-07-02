@@ -18,10 +18,22 @@ For example if there is a file `foo.log`,
 ## Usage
 
 
+## FilterLine Config File
 
-## Known Issues
+There are 2 kinds of config file : `filterline.json` and `filterline.txt`.
 
-No
+Samples below : 
+
+```
+{
+    "rules":[
+        
+    ]
+}
+```
+
+
+
 
 ## Release Notes
 

@@ -1,0 +1,10 @@
+{
+    "type":"regex",
+    "rules": 
+    [
+        "Framework app begin to start",
+        "Framework app launch complete",
+        "view did appear",
+        "Framework did enter background"
+    ]
+}

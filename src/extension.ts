@@ -16,23 +16,27 @@ export function activate(context: vscode.ExtensionContext) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable1 = vscode.commands.registerCommand('extension.filterLineWithOneRegex', () => {
-        // The code you place here will be executed every time your command is executed
-        let filter = new FilterLineWithOneRegex();
+    let disposable_inputstring = vscode.commands.registerCommand('extension.filterLineWithInputString', () => {
+        let filter = new FilterLineWithInputString();
         filter.filter();
         context.subscriptions.push(filter);
     });
 
-    let disposable2 = vscode.commands.registerCommand('extension.filterLineWithRegexConfig', () => {
-        // The code you place here will be executed every time your command is executed
+    let disposable_inputregex = vscode.commands.registerCommand('extension.filterLineWithInputRegex', () => {
+        let filter = new FilterLineWithInputRegex();
+        filter.filter();
+        context.subscriptions.push(filter);
+    });
 
+    let disposable_regexconfig = vscode.commands.registerCommand('extension.filterLineWithRegexConfig', () => {
         let filter = new FilterLineWithRegexConfig();
         filter.filter();
         context.subscriptions.push(filter);
     });
 
-    context.subscriptions.push(disposable1);
-    context.subscriptions.push(disposable2);
+    context.subscriptions.push(disposable_inputstring);
+    context.subscriptions.push(disposable_inputregex);
+    context.subscriptions.push(disposable_regexconfig);
 }
 
 // this method is called when your extension is deactivated
@@ -146,7 +150,40 @@ class FilterLineBase{
         return undefined;
     }
 }
-class FilterLineWithOneRegex extends FilterLineBase{
+
+class FilterLineWithInputString extends FilterLineBase{
+    private _inputstring?: string;
+
+    protected prepare(callback : (succeed: boolean)=>void){
+        vscode.window.showInputBox().then(text => {
+            if(text === undefined || text === ''){
+                console.log('No input');
+                callback(false);
+                return;
+            }
+            console.log('input : ' + text);
+
+            this._inputstring = text;
+            callback(true);
+        });
+    }
+
+    protected matchLine(line: string): string | undefined{
+        if(this._inputstring === undefined){
+            return undefined;
+        }
+        if(line.indexOf(this._inputstring) !== -1){
+            return line;
+        }
+        return undefined;
+    }
+
+    dispose(){
+    }
+
+}
+
+class FilterLineWithInputRegex extends FilterLineBase{
     private _regex?: RegExp;
 
     protected prepare(callback : (succeed: boolean)=>void){

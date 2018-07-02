@@ -1,6 +1,8 @@
 {
+    "type":"core",
     "prefix": "([^ ]+) ([^ ]+) \\[([^ ]+)\\]",
-    "rules": [
+    "rules": 
+    [
         {
             "src": "Framework app begin to start"
         },
