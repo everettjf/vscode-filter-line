@@ -38,25 +38,17 @@ class FLConfig{
                 this._currentArrayKey = this._lastKey;
                 this._currentArrayItem = {};
                 this._value[this._currentArrayKey] = [];
-                // console.log(this._value[this._currentArrayKey]);
-                // console.log(typeof(this._value[this._currentArrayKey]));
                 return;
             }else if(trimmedline === '-'){
                 // end current array item , will into next array item
-                // console.log('----- begin -----');
-                // console.log('--------- end of array item ');
-                // console.log('key = ' + this._currentArrayKey);
-                // console.log('item = ');
-                // console.log(this._currentArrayItem);
-                // console.log('----- end -----');
-                if(this._currentArrayKey.length > 0){
+                if(this._currentArrayKey.length > 0 && this._currentArrayItem){
                     this._value[this._currentArrayKey].push(this._currentArrayItem);
                     this._currentArrayItem = {};
                 }
                 return;
             }else if(trimmedline === ']'){
                 // end current array item , will into next array item
-                if(this._currentArrayKey.length > 0){
+                if(this._currentArrayKey.length > 0 && this._currentArrayItem){
                     this._value[this._currentArrayKey].push(this._currentArrayItem);
                     this._currentArrayItem = {};
                 }
@@ -68,6 +60,12 @@ class FLConfig{
 
             let parts = splitString(trimmedline,':');
             if(parts === undefined){
+                // no kv, so check if array mode
+                // if array node , directly push as string
+                if(this._isArrayMode){
+                    this._currentArrayItem = undefined;
+                    this._value[this._currentArrayKey].push(trimmedline);
+                }
                 return;
             }
             let k = parts[0].trim();
