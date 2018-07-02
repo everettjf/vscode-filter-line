@@ -1,7 +1,10 @@
 'use strict';
+// 
+// EVerett's Markup Language
+// 
 
 
-class FLConfig{
+class EVML{
     protected _value: any = {};
     protected _isArrayMode: boolean = false;
     protected _currentArrayItem?: any;
@@ -58,7 +61,7 @@ class FLConfig{
                 return;
             }
 
-            let parts = splitString(trimmedline,':');
+            let parts = evml_split(trimmedline,':');
             if(parts === undefined){
                 // no kv, so check if array mode
                 // if array node , directly push as string
@@ -93,7 +96,7 @@ class FLConfig{
     }
 }
 
-function splitString(str:string, sep:string): [string,string] | undefined{
+function evml_split(str:string, sep:string): [string,string] | undefined{
 
     let index = str.indexOf(sep);
     // no sep
@@ -109,4 +112,4 @@ function splitString(str:string, sep:string): [string,string] | undefined{
     return ret;
 }
 
-export { FLConfig, splitString};
+export { EVML, evml_split};

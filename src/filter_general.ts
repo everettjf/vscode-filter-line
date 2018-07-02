@@ -1,7 +1,7 @@
 'use strict';
 import * as vscode from 'vscode';
 import { FilterLineBase}  from './filter_base';
-import {padwithblank} from './util';
+import {padWithBlank, readJsonFile} from './util';
 
 
 class FilterLineWithRegexConfig extends FilterLineBase{
@@ -29,7 +29,7 @@ class FilterLineWithRegexConfig extends FilterLineBase{
         console.log('config path : ');
         console.log(configPath);
 
-        this._config = this.readJsonFile(configPath);
+        this._config = readJsonFile(configPath);
         if(!this._config){
             this.showError('Can not read config file in ' + configPath);
             console.log('failed read ' + configPath);
@@ -155,8 +155,8 @@ class FilterLineWithRegexConfig extends FilterLineBase{
                 contentstring = content;
             }
 
-            flagstring = padwithblank(flagstring,4);
-            tagstring = padwithblank(tagstring,4);
+            flagstring = padWithBlank(flagstring,4);
+            tagstring = padWithBlank(tagstring,4);
 
             return prefixstring + ' ' + flagstring + ' ' + tagstring + ' ' + contentstring;
         }
