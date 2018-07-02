@@ -5,6 +5,7 @@
 
 // The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
+import { FLConfig,splitString } from '../flconfig';
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -16,7 +17,29 @@ suite("Extension Tests", function () {
 
     // Defines a Mocha unit test
     test("Something 1", function() {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
+        // assert.equal(-1, [1, 2, 3].indexOf(5));
+        // assert.equal(-1, [1, 2, 3].indexOf(0));
+    });
+    test("split string", function() {
+        // console.log(splitString('test:1:2:3:4:5',':'));
+        // console.log(splitString('test   :    1:2:3:4:5',':'));
+        // console.log(splitString('test:',':'));
+        // console.log(splitString('test',':'));
+
+    });
+    test("Read fl config", function(done) {
+        let fl = new FLConfig();
+        // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log0txt/.vscode/filterline.txt';
+        let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log1txt/.vscode/filterline.txt';
+        // let filepath = '/Users/qiwei/github/vscode-filter-line/demo/log2txt/.vscode/filterline.txt';
+        fl.parse(filepath,(succeed,errorinfo)=>{
+            console.log(succeed);
+            console.log(errorinfo);
+
+            console.log('value = ' );
+            console.log(fl.getValue());
+
+            done();
+        });
     });
 });
