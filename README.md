@@ -1,6 +1,6 @@
-# filter-line README
+# Filter Line README
 
-Filter line for current opening file by strings/regular expressions.
+Filter line for current opening file by strings/regular expressions, generating the result in a new file.
 
 ## Features
 

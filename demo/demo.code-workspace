@@ -4,19 +4,19 @@
 			"path": "log0json"
 		},
 		{
-			"path": "log0txt"
+			"path": "log0eoml"
 		},
 		{
 			"path": "log1json"
 		},
 		{
-			"path": "log1txt"
+			"path": "log1eoml"
 		},
 		{
 			"path": "log2json"
 		},
 		{
-			"path": "log2txt"
+			"path": "log2eoml"
 		}
 	],
 	"settings": {}
