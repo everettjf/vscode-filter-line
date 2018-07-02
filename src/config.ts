@@ -65,8 +65,10 @@ class FilterConfigReader{
                     callback(false,'parse file failed : ' + errorinfo);
                     return;
                 }
-
+                this._config = parser.getValue();
+                
                 this.precompileConfig((succeed,errorinfo)=>{
+                    console.log('precompiled result : ' + succeed);
                     callback(succeed,errorinfo);
                 });
             });
@@ -74,7 +76,14 @@ class FilterConfigReader{
     }
 
     precompileConfig(callback:(succeed:boolean, errorinfo:string)=>void){
+        if(!this._config){
+            callback(false,'config is invalidate');
+            return;
+        }
+
         // field: type <must exist>
+        console.log('config = ' + this._config);
+
         this._configType = this._config['type'];
         if(this._configType){
             let supportedTypes = [
@@ -98,6 +107,8 @@ class FilterConfigReader{
             return;
         }
 
+        console.log('config type : ' + this._configType);
+
         if(this._configType === 'stringlist'){
             this.precompileAsStringList(callback);
         }else if(this._configType === 'regexlist'){
@@ -106,17 +117,18 @@ class FilterConfigReader{
             this.precompileAsGeneral(callback);
         }else{
             console.log('Will not go here');
+            callback(false,'System error : should not go here');
         }
-
-        console.log('precompiled config:');
-        console.log(this._config);
     }
 
     private precompileAsStringList(callback:(succeed:boolean, errorinfo:string)=>void){
+        if(!this._config){
+            callback(false,'config is invalidate');
+            return;
+        }
+
         // all rule must be string type
         for(let rule of this._config['rules']){
-            console.log('rule type ' + rule);
-
             if(typeof rule !== 'string'){
                 callback(false,'Not all rule is string type');
                 return;
@@ -126,10 +138,13 @@ class FilterConfigReader{
         callback(true,'');
     }
     private precompileAsRegexList(callback:(succeed:boolean, errorinfo:string)=>void){
+        if(!this._config){
+            callback(false,'config is invalidate');
+            return;
+        }
+
         // all rule must be string type
         for(let rule of this._config['rules']){
-            console.log('rule type ' + rule);
-
             if(typeof rule !== 'string'){
                 callback(false,'Not all rule is string type');
                 return;
@@ -154,6 +169,11 @@ class FilterConfigReader{
     }
 
     private precompileAsGeneral(callback:(succeed:boolean, errorinfo:string)=>void){
+        if(!this._config){
+            callback(false,'config is invalidate');
+            return;
+        }
+
         // field: prefix <optional>
         if(this._config['prefix']){
             try{
@@ -181,6 +201,8 @@ class FilterConfigReader{
                 }
             }
         }
+
+        callback(true,'');
     }
 }
 
