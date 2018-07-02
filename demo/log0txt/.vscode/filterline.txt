@@ -1,4 +1,4 @@
-type: string
+type: stringlist
 rules: 
 [
     Framework app begin to start

@@ -1,3 +1,4 @@
+'use strict';
 
 
 class FLConfig{
@@ -13,7 +14,6 @@ class FLConfig{
     public parse(filePath:string, callback: (succeed: boolean, errorinfo: string)=> void){
         const readline = require('readline');
         const fs = require('fs');
-        var path = require('path');
 
         if(!fs.existsSync(filePath)){
             callback(false,'file not exist');

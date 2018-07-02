@@ -5,7 +5,7 @@
 
 // The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
-import { FLConfig,splitString } from '../flconfig';
+import { FLConfig} from '../flconfig';
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -17,8 +17,8 @@ suite("Extension Tests", function () {
 
     // Defines a Mocha unit test
     test("Something 1", function() {
-        // assert.equal(-1, [1, 2, 3].indexOf(5));
-        // assert.equal(-1, [1, 2, 3].indexOf(0));
+        assert.equal(-1, [1, 2, 3].indexOf(5));
+        assert.equal(-1, [1, 2, 3].indexOf(0));
     });
     test("split string", function() {
         // console.log(splitString('test:1:2:3:4:5',':'));
