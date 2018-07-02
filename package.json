@@ -1,7 +1,7 @@
 {
     "name": "filter-line",
     "displayName": "Filter Line",
-    "description": "filter line by string or regular expression",
+    "description": "Filter line by strings or regular expressions",
     "version": "0.1.0",
     "publisher": "everettjf",
     "engines": {
@@ -45,5 +45,16 @@
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
-    }
+    },
+    "icon": "images/icon.png",
+    "license": "SEE LICENSE IN LICENSE.txt",
+    "bugs": {
+        "url": "https://github.com/everettjf/vscode-filter-line/issues",
+        "email": "everettjf@live.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/everettjf/vscode-filter-line.git"
+    },
+    "homepage": "https://github.com/everettjf/vscode-filter-line"
 }
