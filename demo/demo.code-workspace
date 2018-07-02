@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "log0json"
+		},
+		{
+			"path": "log0txt"
+		},
+		{
+			"path": "log1json"
+		},
+		{
+			"path": "log1txt"
+		},
+		{
+			"path": "log2json"
+		},
+		{
+			"path": "log2txt"
+		}
+	],
+	"settings": {}
+}
