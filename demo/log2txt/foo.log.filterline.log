@@ -1,5 +1,9 @@
 2018-06-25 09:46:36.577 0x10660d110            Framework app begin to start
 2018-06-25 09:46:37.096 0x10660d110            启动参数
+    "param0" : "1",
+    "param1" : "2",
+    "param2" : "3",
+)
 2018-06-25 09:46:40.064 0x10660d110            VC显示 ViewController LoginViewController view did appear LoginViewController
 2018-06-25 09:46:40.068 0x10676d300       ---- App启动完成 Framework app launch complete : cost 1000 ms : cost 1000 ms
 2018-06-25 09:47:40.064 0x10660d110            VC显示 ViewController IndexViewController view did appear IndexViewController

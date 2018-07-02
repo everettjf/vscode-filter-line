@@ -6,7 +6,10 @@ import {FilterConfigReader } from './config';
 class FilterLineWithConfigFile extends FilterLineBase{
     private _config?: any;
     private _configType: string = '';
+
+    // general
     private _flag: string = ""; // flag is global
+    private _untilRegex?: RegExp; // global , ignore prefix
 
     protected prepare(callback : (succeed: boolean)=>void){
         let configReader: FilterConfigReader = new FilterConfigReader();
@@ -60,6 +63,17 @@ class FilterLineWithConfigFile extends FilterLineBase{
         if(this._config === undefined){
             return undefined;
         }
+
+        if(this._untilRegex){
+            // return the original line until find the match line 
+            if(!line.match(this._untilRegex)){
+                return line;
+            }
+            // Ok , got the line
+            this._untilRegex = undefined;
+            return line;
+        }
+
         let prefixstring = '';
         let content = line;
         let prefix_regex = this._config['_prefix_regex'];
@@ -93,7 +107,7 @@ class FilterLineWithConfigFile extends FilterLineBase{
             let dest: string = rule['dest'];
             let tag: string = rule['tag'];
             let flag: string = rule['flag'];
-            // let until_regex: RegExp = rule['_until_regex'];
+            let until_regex: RegExp = rule['_until_regex'];
 
             // global flag
             if(flag !== undefined){
@@ -114,6 +128,12 @@ class FilterLineWithConfigFile extends FilterLineBase{
                 continue;
             }
 
+            // Now, it match , check the until regex
+            if(until_regex){
+                this._untilRegex = until_regex;
+            }
+
+            // Print the content
             let flagstring = this._flag;
             let tagstring = tag;
             let contentstring = '';
