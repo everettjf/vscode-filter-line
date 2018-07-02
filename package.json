@@ -1,7 +1,7 @@
 {
     "name": "filter-line",
     "displayName": "Filter Line",
-    "description": "filter line by regular expression",
+    "description": "filter line by string or regular expression",
     "version": "0.0.1",
     "publisher": "everettjf",
     "engines": {
@@ -11,15 +11,20 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.filterLineWithOneRegex",
+        "onCommand:extension.filterLineWithInputString",
+        "onCommand:extension.filterLineWithInputRegex",
         "onCommand:extension.filterLineWithRegexConfig"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.filterLineWithOneRegex",
-                "title": "Filter Line With One Regex"
+                "command": "extension.filterLineWithInputString",
+                "title": "Filter Line With Input String"
+            },
+            {
+                "command": "extension.filterLineWithInputRegex",
+                "title": "Filter Line With Input Regex"
             },
             {
                 "command": "extension.filterLineWithRegexConfig",
