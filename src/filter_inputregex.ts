@@ -8,11 +8,11 @@ class FilterLineWithInputRegex extends FilterLineBase{
     protected prepare(callback : (succeed: boolean)=>void){
         vscode.window.showInputBox().then(text => {
             if(text === undefined || text === ''){
-                console.log('No input');
+                // console.log('No input');
                 callback(false);
                 return;
             }
-            console.log('input : ' + text);
+            // console.log('input : ' + text);
 
             this._regex = new RegExp(text);
             callback(true);
