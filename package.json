@@ -11,24 +11,24 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.filterLineWithInputString",
-        "onCommand:extension.filterLineWithInputRegex",
-        "onCommand:extension.filterLineWithConfigFile"
+        "onCommand:extension.filterLineByInputString",
+        "onCommand:extension.filterLineByInputRegex",
+        "onCommand:extension.filterLineByConfigFile"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.filterLineWithInputString",
-                "title": "Filter Line With Input String"
+                "command": "extension.filterLineByInputString",
+                "title": "Filter Line By Input String"
             },
             {
-                "command": "extension.filterLineWithInputRegex",
-                "title": "Filter Line With Input Regex"
+                "command": "extension.filterLineByInputRegex",
+                "title": "Filter Line By Input Regex"
             },
             {
-                "command": "extension.filterLineWithConfigFile",
-                "title": "Filter Line With Config File"
+                "command": "extension.filterLineByConfigFile",
+                "title": "Filter Line By Config File"
             }
         ]
     },

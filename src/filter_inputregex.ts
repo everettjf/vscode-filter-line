@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 import {FilterLineBase} from './filter_base';
 
-class FilterLineWithInputRegex extends FilterLineBase{
+class FilterLineByInputRegex extends FilterLineBase{
     private _regex?: RegExp;
 
     protected prepare(callback : (succeed: boolean)=>void){
@@ -13,8 +13,13 @@ class FilterLineWithInputRegex extends FilterLineBase{
                 return;
             }
             // console.log('input : ' + text);
-
-            this._regex = new RegExp(text);
+            try{
+                this._regex = new RegExp(text);
+            }catch(e){
+                this.showError('Regex incorrect :' + e);
+                callback(false);
+                return;
+            }
             callback(true);
         });
     }
@@ -33,4 +38,4 @@ class FilterLineWithInputRegex extends FilterLineBase{
     }
 }
 
-export { FilterLineWithInputRegex};
+export { FilterLineByInputRegex};
