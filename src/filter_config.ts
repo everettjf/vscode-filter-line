@@ -68,13 +68,22 @@ class FilterConfig{
 
     precompileConfig(callback:(succeed:boolean, errorinfo:string)=>void){
         // field: type <must exist>
-        if(!this._config['type']){
-            callback(false,'No type in config file ' + this._configPath);
-            return;
-        }
         this._configType = this._config['type'];
-        
-
+        if(this._configType){
+            let supportedTypes = [
+                'stringlist',
+                'regexlist',
+                'general',
+            ];
+            if(supportedTypes.indexOf(this._configType) === -1){
+                callback(false,'supported type is stringlist/regexlist/general, regexlist is default if not specified');
+                return;
+            }
+        }else{
+            // default
+            this._configType = 'regexlist';
+            console.log('No config type specified, default to regexlist');
+        }
 
         // field: rules <must exist>
         if(!this._config['rules']){
@@ -82,6 +91,71 @@ class FilterConfig{
             return;
         }
 
+        if(this._configType === 'stringlist'){
+            this.precompileAsStringList(callback);
+        }else if(this._configType === 'regexlist'){
+            this.precompileAsRegexList(callback);
+        }else if(this._configType === 'general'){
+            this.precompileAsGeneral(callback);
+        }else{
+            console.log('Will not go here');
+        }
+
+        console.log('precompiled config:');
+        console.log(this._config);
+    }
+
+    precompileAsStringList(callback:(succeed:boolean, errorinfo:string)=>void){
+        // all rule must be string type
+        for(let rule of this._config['rules']){
+            console.log('rule type ' + rule);
+
+            if(typeof rule !== 'string'){
+                callback(false,'Not all rule is string type');
+                return;
+            }
+        }
+
+        callback(true,'');
+    }
+    precompileAsRegexList(callback:(succeed:boolean, errorinfo:string)=>void){
+        // all rule must be string type
+        for(let rule of this._config['rules']){
+            console.log('rule type ' + rule);
+
+            if(typeof rule !== 'string'){
+                callback(false,'Not all rule is string type');
+                return;
+            }
+        }
+
+        /* translate string type rule into 
+        {
+            'src':'value in the rule',
+            '_src_regex' : <precompiled regex>
+        }
+        */
+       let newRules = [];
+        for(let rule of this._config['rules']){
+            let newRule: any = {
+                'src' : rule,
+            };
+            try{
+                newRule['_src_regex'] = new RegExp(rule);
+            }catch(e){
+                callback(false, 'rule regex incorrect : ' + rule);
+                return;
+            }
+
+            newRules.push(newRule);
+        }
+        // override the rules in config
+        this._config['rules'] = newRules;
+
+        callback(true,'');
+    }
+
+    precompileAsGeneral(callback:(succeed:boolean, errorinfo:string)=>void){
         // field: prefix <optional>
         if(this._config['prefix']){
             try{
@@ -92,7 +166,7 @@ class FilterConfig{
             }
         }
 
-        // for each rules
+        // for each object in rules
         for(let rule of this._config['rules']){
             try{
                 rule['_src_regex'] = new RegExp(rule['src']);
@@ -109,10 +183,7 @@ class FilterConfig{
                 }
             }
         }
-        console.log('fixed config:');
-        console.log(this._config);
     }
-
 }
 
 export {FilterConfig};
