@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 import { FilterLineBase } from './filter_base';
 
-class FilterLineWithInputString extends FilterLineBase{
+class FilterLineByInputString extends FilterLineBase{
     private _inputstring?: string;
 
     protected prepare(callback : (succeed: boolean)=>void){
@@ -34,4 +34,4 @@ class FilterLineWithInputString extends FilterLineBase{
 
 }
 
-export { FilterLineWithInputString};
+export { FilterLineByInputString};

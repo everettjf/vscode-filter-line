@@ -3,7 +3,7 @@ import { FilterLineBase}  from './filter_base';
 import {padWithBlank} from './util';
 import {FilterConfigReader } from './config';
 
-class FilterLineWithConfigFile extends FilterLineBase{
+class FilterLineByConfigFile extends FilterLineBase{
     private _config?: any;
     private _configType: string = '';
 
@@ -166,4 +166,4 @@ class FilterLineWithConfigFile extends FilterLineBase{
 }
 
 
-export { FilterLineWithConfigFile};
+export { FilterLineByConfigFile};
