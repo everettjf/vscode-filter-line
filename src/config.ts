@@ -3,12 +3,19 @@ import * as vscode from 'vscode';
 import {EVML} from './evml';
 import {readJsonFile} from './util';
 
-class FilterConfig{
+class FilterConfigReader{
     private _config?: any;
     private _configPath: string = '';
     private _configType: string = '';
 
-    protected read(callback : (succeed: boolean, errorinfo: string)=>void){
+    public getConfig():any|undefined{
+        return this._config;
+    }
+    public getConfigType(): string{
+        return this._configType;
+    }
+
+    public read(callback : (succeed: boolean, errorinfo: string)=>void){
         var path = require('path');
         var fs = require('fs');
 
@@ -105,7 +112,7 @@ class FilterConfig{
         console.log(this._config);
     }
 
-    precompileAsStringList(callback:(succeed:boolean, errorinfo:string)=>void){
+    private precompileAsStringList(callback:(succeed:boolean, errorinfo:string)=>void){
         // all rule must be string type
         for(let rule of this._config['rules']){
             console.log('rule type ' + rule);
@@ -118,7 +125,7 @@ class FilterConfig{
 
         callback(true,'');
     }
-    precompileAsRegexList(callback:(succeed:boolean, errorinfo:string)=>void){
+    private precompileAsRegexList(callback:(succeed:boolean, errorinfo:string)=>void){
         // all rule must be string type
         for(let rule of this._config['rules']){
             console.log('rule type ' + rule);
@@ -129,25 +136,16 @@ class FilterConfig{
             }
         }
 
-        /* translate string type rule into 
-        {
-            'src':'value in the rule',
-            '_src_regex' : <precompiled regex>
-        }
-        */
+        // translate string type rule into RegEx
        let newRules = [];
         for(let rule of this._config['rules']){
-            let newRule: any = {
-                'src' : rule,
-            };
             try{
-                newRule['_src_regex'] = new RegExp(rule);
+                let newRule = new RegExp(rule);
+                newRules.push(newRule);
             }catch(e){
                 callback(false, 'rule regex incorrect : ' + rule);
                 return;
             }
-
-            newRules.push(newRule);
         }
         // override the rules in config
         this._config['rules'] = newRules;
@@ -155,7 +153,7 @@ class FilterConfig{
         callback(true,'');
     }
 
-    precompileAsGeneral(callback:(succeed:boolean, errorinfo:string)=>void){
+    private precompileAsGeneral(callback:(succeed:boolean, errorinfo:string)=>void){
         // field: prefix <optional>
         if(this._config['prefix']){
             try{
@@ -186,4 +184,4 @@ class FilterConfig{
     }
 }
 
-export {FilterConfig};
+export {FilterConfigReader};

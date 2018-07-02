@@ -2,9 +2,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import {FilterLineWithInputString} from './filter_string';
-import {FilterLineWithInputRegex} from './filter_regex';
-import {FilterLineWithRegexConfig} from './filter_general';
+import {FilterLineWithInputString} from './filter_inputstring';
+import {FilterLineWithInputRegex} from './filter_inputregex';
+import {FilterLineWithConfigFile} from './filter_configfile';
 
 
 // this method is called when your extension is activated
@@ -31,15 +31,15 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(filter);
     });
 
-    let disposable_regexconfig = vscode.commands.registerCommand('extension.filterLineWithRegexConfig', () => {
-        let filter = new FilterLineWithRegexConfig();
+    let disposable_configfile = vscode.commands.registerCommand('extension.filterLineWithConfigFile', () => {
+        let filter = new FilterLineWithConfigFile();
         filter.filter();
         context.subscriptions.push(filter);
     });
 
     context.subscriptions.push(disposable_inputstring);
     context.subscriptions.push(disposable_inputregex);
-    context.subscriptions.push(disposable_regexconfig);
+    context.subscriptions.push(disposable_configfile);
 }
 
 // this method is called when your extension is deactivated
