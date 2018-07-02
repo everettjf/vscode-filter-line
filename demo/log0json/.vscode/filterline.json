@@ -1,5 +1,5 @@
 {
-    "type":"string",
+    "type":"stringlist",
     "rules": [
         "Framework app begin to start",
         "Framework app launch complete",

@@ -1,5 +1,5 @@
 {
-    "type":"regex",
+    "type":"regexlist",
     "rules": 
     [
         "Framework app begin to start",

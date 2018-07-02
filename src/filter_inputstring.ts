@@ -1,0 +1,37 @@
+'use strict';
+import * as vscode from 'vscode';
+import { FilterLineBase } from './filter_base';
+
+class FilterLineWithInputString extends FilterLineBase{
+    private _inputstring?: string;
+
+    protected prepare(callback : (succeed: boolean)=>void){
+        vscode.window.showInputBox().then(text => {
+            if(text === undefined || text === ''){
+                console.log('No input');
+                callback(false);
+                return;
+            }
+            console.log('input : ' + text);
+
+            this._inputstring = text;
+            callback(true);
+        });
+    }
+
+    protected matchLine(line: string): string | undefined{
+        if(this._inputstring === undefined){
+            return undefined;
+        }
+        if(line.indexOf(this._inputstring) !== -1){
+            return line;
+        }
+        return undefined;
+    }
+
+    dispose(){
+    }
+
+}
+
+export { FilterLineWithInputString};
