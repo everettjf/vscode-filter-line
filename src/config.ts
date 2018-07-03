@@ -44,6 +44,11 @@ class FilterConfigReader{
         }
 
         console.log('config path : ' + this._configPath);
+
+        if(!fs.existsSync(this._configPath)){
+            callback(false, 'Can not locate config file ' + this._configPath + ', please visit demo https://github.com/everettjf/vscode-filter-line/tree/master/demo');
+            return;
+        }
         
         let ext = path.extname(this._configPath);
         if(ext === '.json'){
