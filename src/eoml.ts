@@ -28,7 +28,6 @@
      itemkey1:itemvalue1
      itemkey2:itemvalue2
      itemkey3:itemvalue3
-     -
  ]
  ```
 */
@@ -87,7 +86,12 @@ class EOML{
             }else if(trimmedline === ']'){
                 // end current array item , will into next array item
                 if(this._currentArrayKey.length > 0 && this._currentArrayItem){
-                    this._value[this._currentArrayKey].push(this._currentArrayItem);
+                    console.log('got ]');
+                    console.log(this._currentArrayItem);
+                    console.log(Object.keys(this._currentArrayItem).length);
+                    if(Object.keys(this._currentArrayItem).length > 0){
+                        this._value[this._currentArrayKey].push(this._currentArrayItem);
+                    }
                     this._currentArrayItem = {};
                 }
                 // end array mode
