@@ -1,7 +1,7 @@
 'use strict';
-import { FilterLineBase}  from './filter_base';
-import {padWithBlank} from './util';
-import {FilterConfigReader } from './config';
+import { FilterLineBase }  from './filter_base';
+import { padWithBlank } from './util';
+import { FilterConfigReader } from './config';
 
 class FilterLineByConfigFile extends FilterLineBase{
     private _config?: any;
@@ -23,8 +23,8 @@ class FilterLineByConfigFile extends FilterLineBase{
             this._config = configReader.getConfig();
             this._configType = configReader.getConfigType();
 
-            // console.log('fixed config:');
-            // console.log(this._config);
+            console.log('fixed config:');
+            console.log(this._config);
 
             callback(true);
         });
@@ -91,7 +91,7 @@ class FilterLineByConfigFile extends FilterLineBase{
             }
             if(res.length > 1){
                 for(let idx = 1; idx < res.length - 1; idx++){
-                    prefixstring += res[idx];
+                    prefixstring += padWithBlank(res[idx],8);
                     prefixstring += ' ';
                 }
                 content = res[res.length - 1];
@@ -142,9 +142,12 @@ class FilterLineByConfigFile extends FilterLineBase{
                 contentstring = dest;
                 // has group
                 if(result.length > 1){
-                    for(let part of result){
+                    for(let idx=0;idx<result.length;idx++){
+                        if(idx === 0){
+                            continue;
+                        }
                         contentstring += ' ';
-                        contentstring += part;
+                        contentstring += result[idx];
                     }
                 }
             }else{
