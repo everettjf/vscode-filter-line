@@ -1,8 +1,37 @@
 'use strict';
-// 
-// Everett's Obvious Minimal Language
-// 
+/* 
+ Everett's Obvious Minimal Language
 
+ sample.eoml
+ ```
+ key1:value1
+ key2:value2
+ key3:value3
+ key4:
+ [
+     arrayitem1
+     arrayitem2
+     arrayitem3
+     arrayitem4
+     arrayitem5
+ ]
+ key5:
+ [
+     itemkey1:itemvalue1
+     itemkey2:itemvalue2
+     itemkey3:itemvalue3
+     -
+     itemkey1:itemvalue1
+     itemkey2:itemvalue2
+     itemkey3:itemvalue3
+     -
+     itemkey1:itemvalue1
+     itemkey2:itemvalue2
+     itemkey3:itemvalue3
+     -
+ ]
+ ```
+*/
 
 class EOML{
     protected _value: any = {};
@@ -33,7 +62,13 @@ class EOML{
             if(trimmedline.length === 0){
                 return;
             }
+
             // console.log('line:' + line);
+
+            // ignore line that begins with //
+            if(trimmedline.startsWith('#')){
+                return;
+            }
 
             if(trimmedline === '['){
                 // only flag into array mode , and read next line
