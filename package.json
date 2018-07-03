@@ -56,5 +56,8 @@
         "type": "git",
         "url": "https://github.com/everettjf/vscode-filter-line.git"
     },
-    "homepage": "https://github.com/everettjf/vscode-filter-line"
+    "homepage": "https://github.com/everettjf/vscode-filter-line",
+    "dependencies": {
+        "eoml": "^1.0.2"
+    }
 }

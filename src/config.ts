@@ -1,6 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
-import {EOML} from './eoml';
+import {EOML} from 'eoml';
 import {readJsonFile} from './util';
 
 class FilterConfigReader{
