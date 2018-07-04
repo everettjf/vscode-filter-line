@@ -15,6 +15,14 @@ Filter line for current opening file by strings/regular expressions, generating 
 - [Introduce](https://medium.com/@everettjf/vscode-extension-filter-line-ec4250c49a92)
 - [中文介绍](https://everettjf.github.io/2018/07/03/vscode-extension-filter-line/)
 
+## Install
+
+1. [Marketplace](https://marketplace.visualstudio.com/items?itemName=everettjf.filter-line)
+2. Search `Filter Line` in vscode extensions.
+
+![search](img/search.png)
+
+
 ## Usage
 
 ![list](img/commandlist.png)
