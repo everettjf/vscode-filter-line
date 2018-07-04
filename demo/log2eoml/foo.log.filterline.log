@@ -4,12 +4,12 @@
     "param1" : "2",
     "param2" : "3",
 )
-2018-06-25 09:46:40.064 0x10660d110            VC显示 ViewController LoginViewController view did appear LoginViewController
-2018-06-25 09:46:40.068 0x10676d300       ---- App启动完成 Framework app launch complete : cost 1000 ms : cost 1000 ms
-2018-06-25 09:47:40.064 0x10660d110            VC显示 ViewController IndexViewController view did appear IndexViewController
-2018-06-25 09:49:40.064 0x10660d110            VC显示 ViewController ShopViewController view did appear ShopViewController
-2018-06-25 09:50:40.064 0x10660d110            VC显示 ViewController DetailViewController view did appear DetailViewController
-2018-06-25 09:51:40.064 0x10660d110            VC显示 ViewController ShopViewController view did appear ShopViewController
+2018-06-25 09:46:40.064 0x10660d110            VC显示 LoginViewController
+2018-06-25 09:46:40.068 0x10676d300       ---- App启动完成 : cost 1000 ms
+2018-06-25 09:47:40.064 0x10660d110            VC显示 IndexViewController
+2018-06-25 09:49:40.064 0x10660d110            VC显示 ShopViewController
+2018-06-25 09:50:40.064 0x10660d110            VC显示 DetailViewController
+2018-06-25 09:51:40.064 0x10660d110            VC显示 ShopViewController
 2018-06-25 09:52:40.148 0x10676d300     |      did进后台
 2018-06-25 09:53:40.148 0x10676d300            will进前台
-2018-06-25 09:51:40.064 0x10660d110            VC显示 ViewController ShopViewController view did appear ShopViewController
+2018-06-25 09:51:40.064 0x10660d110            VC显示 ShopViewController
