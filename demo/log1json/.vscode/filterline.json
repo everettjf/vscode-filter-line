@@ -2,9 +2,7 @@
     "type":"regexlist",
     "rules": 
     [
-        "Framework app begin to start",
-        "Framework app launch complete",
-        "view did appear",
-        "Framework did enter background"
+        "cost (\\d+) ms",
+        "Framework app begin to start"
     ]
 }
