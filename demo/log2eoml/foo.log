@@ -36,6 +36,12 @@
 2018-06-25 09:51:40.064 [0x10660d110] ViewController ShopViewController view did appear
 2018-06-25 09:52:40.148 [0x10676d300] Framework will resign active
 2018-06-25 09:52:40.148 [0x10676d300] Framework did enter background
+2018-06-25 09:48:39.422 [0x10660d110] ViewController ShopViewController view did load 
+2018-06-25 09:48:39.422 [0x10660d110] ViewController ShopViewController view did load 
+2018-06-25 09:49:40.062 [0x10660d110] ViewController ShopViewController view will appear
+2018-06-25 09:49:40.064 [0x10660d110] ViewController ShopViewController view did appear
+2018-06-25 09:49:40.062 [0x10660d110] ViewController ShopViewController view will appear
+2018-06-25 09:49:40.064 [0x10660d110] ViewController ShopViewController view did appear
 2018-06-25 09:53:40.148 [0x10676d300] Framework will enter foreground
 2018-06-25 09:54:40.148 [0x10676d300] Framework did become active
 2018-06-25 09:51:40.062 [0x10660d110] ViewController ShopViewController view will appear

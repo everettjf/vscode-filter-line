@@ -109,6 +109,15 @@ class FilterLineByConfigFile extends FilterLineBase{
             let flag: string = rule['flag'];
             let until_regex: RegExp = rule['_until_regex'];
 
+            // try match
+            let result: any = content.match(src_regex);
+            if(!result){
+                // console.log('result is undefine');
+                // console.log('reg = ' + src_regex);
+                // console.log('line = ' + content);
+                continue;
+            }
+
             // global flag
             if(flag !== undefined){
                 this._flag = flag;
@@ -117,15 +126,6 @@ class FilterLineByConfigFile extends FilterLineBase{
             // tag
             if(tag === undefined){
                 tag = '';
-            }
-
-            // try match
-            let result: any = content.match(src_regex);
-            if(!result){
-                // console.log('result is undefine');
-                // console.log('reg = ' + src_regex);
-                // console.log('line = ' + content);
-                continue;
             }
 
             // Now, it match , check the until regex

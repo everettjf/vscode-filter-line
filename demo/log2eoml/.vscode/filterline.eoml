@@ -3,38 +3,27 @@ prefix:([^ ]+) ([^ ]+) \[([^ ]+)\]
 rules: 
 [
     src:Framework app begin to start
-
     -
-
     src: Framework app begin to start
     dest: App开始启动
     tag: >>>>
-    flag: 
-
     -
     src: Framework app launch complete (.+)
     dest: App启动完成
     tag: ----
-    flag: 
     -
     src: ViewController (.+) view did appear
     dest: VC显示
-    tag: 
-    flag: 
     -
     src: Framework did enter background
     dest: did进后台
-    tag: 
     flag: |
     -
     src: Framework will enter foreground
     dest: will进前台
-    tag: 
-    flag: 
+    flag:
     -
     src: Framework app start parameter is :
     dest: 启动参数
-    tag: 
-    flag: 
     until: \)
 ]
