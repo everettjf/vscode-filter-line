@@ -6,8 +6,8 @@ Filter line for current opening file by strings/regular expressions, generating 
 
 ## Features
 
-1. Filter line by input string.
-2. Filter line by input regular expression.
+1. Filter line by input string (or not contain input string).
+2. Filter line by input regular expression (or not match input regular expression).
 3. Filter line by config file `filterline.json`(or `filterline.eoml`) in corresponding `.vscode` directory.
 
 ## Articles
