@@ -1,0 +1,33 @@
+2018-06-25 09:46:37.096 [0x10660d110] Framework app start parameter is : (
+    "param0" : "1",
+    "param1" : "2",
+    "param2" : "3",
+)
+2018-06-25 09:46:37.828 [0x10660d110] Framework did finish launching
+2018-06-25 09:46:37.836 [0x10660d110] Framework init crash engine
+2018-06-25 09:46:38.085 [0x10660d110] Framework init app network
+2018-06-25 09:46:38.092 [0x10660d110] Framework init app 
+2018-06-25 09:46:38.092 [0x10660d110] Framework begin app logic 
+2018-06-25 09:46:38.436 [0x10660d110] Framework create tabbar
+2018-06-25 09:46:38.437 [0x10660d110] Framework create viewcontroller LoginViewController 0x32325453
+2018-06-25 09:46:39.422 [0x10660d110] ViewController LoginViewController view did load 
+2018-06-25 09:46:40.062 [0x10660d110] ViewController LoginViewController view will appear
+2018-06-25 09:46:40.068 [0x10676d300] ViewController LoginViewController view disappear
+2018-06-25 09:46:40.148 [0x10676d300] Framework push viewcontroller IndexViewController
+2018-06-25 09:47:39.422 [0x10660d110] ViewController IndexViewController view did load 
+2018-06-25 09:47:40.062 [0x10660d110] ViewController IndexViewController view will appear
+2018-06-25 09:48:40.068 [0x10676d300] ViewController IndexViewController view disappear
+2018-06-25 09:48:40.148 [0x10676d300] Framework push viewcontroller ShopViewController
+2018-06-25 09:48:39.422 [0x10660d110] ViewController ShopViewController view did load 
+2018-06-25 09:49:40.062 [0x10660d110] ViewController ShopViewController view will appear
+2018-06-25 09:49:40.068 [0x10676d300] ViewController ShopViewController view disappear
+2018-06-25 09:50:40.148 [0x10676d300] Framework push viewcontroller DetailViewController
+2018-06-25 09:50:39.422 [0x10660d110] ViewController DetailViewController view did load 
+2018-06-25 09:50:40.062 [0x10660d110] ViewController DetailViewController view will appear
+2018-06-25 09:51:40.068 [0x10676d300] ViewController DetailViewController view disappear
+2018-06-25 09:51:40.148 [0x10676d300] Framework pop viewcontroller DetailViewController
+2018-06-25 09:51:40.062 [0x10660d110] ViewController ShopViewController view will appear
+2018-06-25 09:52:40.148 [0x10676d300] Framework will resign active
+2018-06-25 09:53:40.148 [0x10676d300] Framework will enter foreground
+2018-06-25 09:54:40.148 [0x10676d300] Framework did become active
+2018-06-25 09:51:40.062 [0x10660d110] ViewController ShopViewController view will appear

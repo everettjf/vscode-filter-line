@@ -31,6 +31,20 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(filter);
     });
 
+    let disposable_notcontaininputstring = vscode.commands.registerCommand('extension.filterLineByNotContainInputString', () => {
+        let filter = new FilterLineByInputString();
+        filter.notcontain = true;
+        filter.filter();
+        context.subscriptions.push(filter);
+    });
+
+    let disposable_notmatchinputregex = vscode.commands.registerCommand('extension.filterLineByNotMatchInputRegex', () => {
+        let filter = new FilterLineByInputRegex();
+        filter.notmatch = true;
+        filter.filter();
+        context.subscriptions.push(filter);
+    });
+
     let disposable_configfile = vscode.commands.registerCommand('extension.filterLineByConfigFile', () => {
         let filter = new FilterLineByConfigFile();
         filter.filter();
@@ -39,6 +53,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposable_inputstring);
     context.subscriptions.push(disposable_inputregex);
+    context.subscriptions.push(disposable_notcontaininputstring);
+    context.subscriptions.push(disposable_notmatchinputregex);
     context.subscriptions.push(disposable_configfile);
 }
 
