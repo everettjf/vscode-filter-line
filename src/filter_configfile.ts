@@ -32,20 +32,14 @@ class FilterLineByConfigFile extends FilterLineBase{
     protected matchLine(line: string): string | undefined{
         if(this._configType === 'general'){
             return this.matchLineGeneral(line);
-        }else if(this._configType === 'regexlist'){
-            return this.matchLineRegexList(line);
         }else if(this._configType === 'stringlist'){
             return this.matchLineStringList(line);
-        }
-        return undefined;
-    }
-
-    protected matchLineRegexList(line: string): string | undefined{
-        for(let rule of this._config['rules']){
-            let res = line.match(rule);
-            if(res){
-                return line;
-            }
+        }else if(this._configType === 'regexlist'){
+            return this.matchLineRegexList(line);
+        }else if(this._configType === 'stringlist_notcontainany'){
+            return this.matchLineStringListNotContainAny(line);
+        }else if(this._configType === 'regexlist_notmatchany'){
+            return this.matchLineRegexListNotMatchAny(line);
         }
         return undefined;
     }
@@ -58,6 +52,36 @@ class FilterLineByConfigFile extends FilterLineBase{
         }
         return undefined;
     }
+
+    protected matchLineStringListNotContainAny(line: string): string | undefined{
+        for(let rule of this._config['rules']){
+            if(line.indexOf(rule) !== -1){
+                // contain 
+                return undefined;
+            }
+        }
+        return line;
+    }
+    protected matchLineRegexList(line: string): string | undefined{
+        for(let rule of this._config['rules']){
+            let res = line.match(rule);
+            if(res){
+                return line;
+            }
+        }
+        return undefined;
+    }
+
+    protected matchLineRegexListNotMatchAny(line: string): string | undefined{
+        for(let rule of this._config['rules']){
+            let res = line.match(rule);
+            if(res){
+                return undefined;
+            }
+        }
+        return line;
+    }
+
 
     protected matchLineGeneral(line: string): string | undefined{
         if(this._config === undefined){

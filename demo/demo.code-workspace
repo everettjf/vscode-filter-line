@@ -17,6 +17,18 @@
 		},
 		{
 			"path": "log2eoml"
+		},
+		{
+			"path": "log3eoml"
+		},
+		{
+			"path": "log3json"
+		},
+		{
+			"path": "log4eoml"
+		},
+		{
+			"path": "log4json"
 		}
 	],
 	"settings": {}

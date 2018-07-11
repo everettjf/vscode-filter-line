@@ -94,6 +94,8 @@ class FilterConfigReader{
             let supportedTypes = [
                 'stringlist',
                 'regexlist',
+                'stringlist_notcontainany',
+                'regexlist_notmatchany',
                 'general',
             ];
             if(supportedTypes.indexOf(this._configType) === -1){
@@ -114,9 +116,9 @@ class FilterConfigReader{
 
         console.log('config type : ' + this._configType);
 
-        if(this._configType === 'stringlist'){
+        if(this._configType === 'stringlist' || this._configType === 'stringlist_notcontainany'){
             this.precompileAsStringList(callback);
-        }else if(this._configType === 'regexlist'){
+        }else if(this._configType === 'regexlist' || this._configType === 'regexlist_notmatchany'){
             this.precompileAsRegexList(callback);
         }else if(this._configType === 'general'){
             this.precompileAsGeneral(callback);

@@ -5,6 +5,8 @@ import {FilterLineBase} from './filter_base';
 class FilterLineByInputRegex extends FilterLineBase{
     private _regex?: RegExp;
 
+    public notmatch: boolean = false;
+
     protected prepare(callback : (succeed: boolean)=>void){
         vscode.window.showInputBox().then(text => {
             if(text === undefined || text === ''){
@@ -28,8 +30,14 @@ class FilterLineByInputRegex extends FilterLineBase{
         if(this._regex === undefined){
             return undefined;
         }
-        if(line.match(this._regex) !== null){
-            return line;
+        if(this.notmatch){
+            if(line.match(this._regex) === null){
+                return line;
+            }
+        }else{
+            if(line.match(this._regex) !== null){
+                return line;
+            }
         }
         return undefined;
     }

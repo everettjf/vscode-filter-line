@@ -1,0 +1,6 @@
+type: regexlist_notmatchany
+rules: 
+[
+    cost (\d+) ms
+    Framework app begin to start
+]

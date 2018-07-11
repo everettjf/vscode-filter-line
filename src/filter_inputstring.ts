@@ -5,6 +5,8 @@ import { FilterLineBase } from './filter_base';
 class FilterLineByInputString extends FilterLineBase{
     private _inputstring?: string;
 
+    public notcontain: boolean = false;
+
     protected prepare(callback : (succeed: boolean)=>void){
         vscode.window.showInputBox().then(text => {
             if(text === undefined || text === ''){
@@ -23,8 +25,14 @@ class FilterLineByInputString extends FilterLineBase{
         if(this._inputstring === undefined){
             return undefined;
         }
-        if(line.indexOf(this._inputstring) !== -1){
-            return line;
+        if(this.notcontain){
+            if(line.indexOf(this._inputstring) === -1){
+                return line;
+            }
+        }else{
+            if(line.indexOf(this._inputstring) !== -1){
+                return line;
+            }
         }
         return undefined;
     }
