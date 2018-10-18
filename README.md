@@ -1,7 +1,5 @@
 # VSCode Extension Filter Line
 
-[![Join the chat at https://gitter.im/vscode-filter-line/vscode-filter-line](https://badges.gitter.im/vscode-filter-line/vscode-filter-line.svg)](https://gitter.im/vscode-filter-line/vscode-filter-line?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Filter line for current opening file by strings/regular expressions, generating the result in a new file.
 
 ## Features
