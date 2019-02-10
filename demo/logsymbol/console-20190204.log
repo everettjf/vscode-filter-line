@@ -1,0 +1,250 @@
+INFO   | jvm 1    | main    | 2019/02/04 02:13:56.328 | [0;32mINFO  [hybrisHTTP38] [10.30.8.7] [NittoIdocFileService] File name generated: Idoc_20190204_021356_256.xml
+INFO   | jvm 1    | main    | 2019/02/04 02:13:56.854 | [m
+INFO   | jvm 1    | main    | 2019/02/04 04:00:06.575 | [0;32mINFO  [importStatementsCronJob::de.hybris.platform.servicelayer.internal.jalo.ServicelayerJob] (importStatementsCronJob) [ImportStatementsCronJob] ImportStatementsCronJob has been started
+INFO   | jvm 1    | main    | 2019/02/04 04:00:07.076 | [m
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | [0;31mERROR [importStatementsCronJob::de.hybris.platform.servicelayer.internal.jalo.ServicelayerJob] (importStatementsCronJob) [SoapStatementDataImportInvoker] Error while executing statement data import soap client:
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | [mAxisFault
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultSubcode: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultString: java.net.SocketTimeoutException: Read timed out
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultActor: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultNode: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultDetail: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	{http://xml.apache.org/axis/}stackTrace:java.net.SocketTimeoutException: Read timed out
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.socketRead0(Native Method)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.socketRead(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.io.BufferedInputStream.fill(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.io.BufferedInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.transport.http.HTTPSender.readHeadersFromSocket(HTTPSender.java:583)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.transport.http.HTTPSender.invoke(HTTPSender.java:143)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:165)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invokeEngine(Call.java:2784)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2767)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2443)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2366)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:1812)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.client.statement.ZDEALER_WEB_INVOICE_LISTStub.ZIfDealerWebStatement(ZDEALER_WEB_INVOICE_LISTStub.java:308)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.loadStatementDetails(SoapStatementDataImportInvoker.java:96)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.execute(SoapStatementDataImportInvoker.java:52)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.execute(SoapStatementDataImportInvoker.java:45)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.services.impl.SoapStatementDataImportService.synchronizeItems(SoapStatementDataImportService.java:51)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.services.impl.SoapAbstractImportService.importData(SoapAbstractImportService.java:52)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.jobs.ImportStatementsCronJob.perform(ImportStatementsCronJob.java:51)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.jobs.ImportStatementsCronJob.perform(ImportStatementsCronJob.java:1)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.servicelayer.internal.jalo.ServicelayerJob.performCronJob(ServicelayerJob.java:38)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.execute(Job.java:1274)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.performImpl(Job.java:794)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.access$1(Job.java:747)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job$JobRunable.run(Job.java:667)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.util.threadpool.PoolableThread.run(PoolableThread.java:198)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	{http://xml.apache.org/axis/}hostname:954625-NTU-PRODAPP1.toyotires.com
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | java.net.SocketTimeoutException: Read timed out
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.AxisFault.makeFault(AxisFault.java:101)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.transport.http.HTTPSender.invoke(HTTPSender.java:154)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:165)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invokeEngine(Call.java:2784)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2767)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2443)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:2366)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.client.Call.invoke(Call.java:1812)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.client.statement.ZDEALER_WEB_INVOICE_LISTStub.ZIfDealerWebStatement(ZDEALER_WEB_INVOICE_LISTStub.java:308)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.loadStatementDetails(SoapStatementDataImportInvoker.java:96)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.execute(SoapStatementDataImportInvoker.java:52)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.imports.soap.invoker.impl.SoapStatementDataImportInvoker.execute(SoapStatementDataImportInvoker.java:45)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.services.impl.SoapStatementDataImportService.synchronizeItems(SoapStatementDataImportService.java:51)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.imports.services.impl.SoapAbstractImportService.importData(SoapAbstractImportService.java:52)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.jobs.ImportStatementsCronJob.perform(ImportStatementsCronJob.java:51)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at com.nitto.core.jobs.ImportStatementsCronJob.perform(ImportStatementsCronJob.java:1)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.servicelayer.internal.jalo.ServicelayerJob.performCronJob(ServicelayerJob.java:38)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.execute(Job.java:1274)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.performImpl(Job.java:794)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job.access$1(Job.java:747)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.cronjob.jalo.Job$JobRunable.run(Job.java:667)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at de.hybris.platform.util.threadpool.PoolableThread.run(PoolableThread.java:198)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | Caused by: java.net.SocketTimeoutException: Read timed out
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.socketRead0(Native Method)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.socketRead(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.net.SocketInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.io.BufferedInputStream.fill(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at java.io.BufferedInputStream.read(Unknown Source)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.transport.http.HTTPSender.readHeadersFromSocket(HTTPSender.java:583)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	at org.apache.axis.transport.http.HTTPSender.invoke(HTTPSender.java:143)
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 | 	... 23 more
+INFO   | jvm 1    | main    | 2019/02/04 04:10:39.523 | [0;32mINFO  [importStatementsCronJob::de.hybris.platform.servicelayer.internal.jalo.ServicelayerJob] (importStatementsCronJob) [ImportStatementsCronJob] ImportStatementsCronJob finished with SUCCESS
+INFO   | jvm 1    | main    | 2019/02/04 04:10:40.024 | [m
+INFO   | jvm 1    | main    | 2019/02/04 04:17:19.185 | [0;33mWARN  [ajp-bio-8009-exec-104] [198.108.66.16] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 04:17:19.686 | [m
+INFO   | jvm 1    | main    | 2019/02/04 04:19:22.320 | [0;33mWARN  [ajp-bio-8009-exec-105] [198.108.66.16] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 04:19:22.821 | [m
+INFO   | jvm 1    | main    | 2019/02/04 04:38:34.807 | [0;32mINFO  [hybrisHTTP12] [10.30.8.7] [NittoIdocFileService] File name generated: Idoc_20190204_043834_234.xml
+INFO   | jvm 1    | main    | 2019/02/04 04:38:35.308 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:13:24.624 | [0;33mWARN  [ajp-bio-8009-exec-106] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:13:25.124 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:19:28.830 | [0;33mWARN  [ajp-bio-8009-exec-107] [87.237.61.118] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:19:29.331 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:19:41.145 | [0;33mWARN  [ajp-bio-8009-exec-111] [87.237.61.118] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:19:41.645 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:19:42.046 | [0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.118] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 07:19:42.546 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:19:46.753 | [0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.118] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:19:47.254 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:24:54.690 | [0;33mWARN  [ajp-bio-8009-exec-111] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:24:55.190 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:25:06.706 | [0;33mWARN  [ajp-bio-8009-exec-110] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:25:07.206 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:29:27.988 | [0;33mWARN  [ajp-bio-8009-exec-110] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:29:28.488 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:29:39.901 | [0;33mWARN  [ajp-bio-8009-exec-111] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:29:40.402 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:29:40.502 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.74] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 07:29:41.002 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:29:45.307 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:29:45.808 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:39:28.750 | [0;33mWARN  [ajp-bio-8009-exec-109] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:39:29.250 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:39:40.664 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:39:41.164 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:39:41.665 | [0;33mWARN  [ajp-bio-8009-exec-106] [69.12.68.122] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 07:39:42.166 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:39:45.670 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:39:46.170 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:49:28.117 | [0;33mWARN  [ajp-bio-8009-exec-106] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:49:28.618 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:49:40.532 | [0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:49:40.732 | [m[0;33mWARN  [ajp-bio-8009-exec-109] [87.237.61.117] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 07:49:41.233 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:49:45.338 | [0;33mWARN  [ajp-bio-8009-exec-109] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:49:45.838 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:59:29.786 | [0;33mWARN  [ajp-bio-8009-exec-109] [50.7.104.18] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:59:30.287 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:59:41.602 | [0;33mWARN  [ajp-bio-8009-exec-107] [50.7.104.18] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:59:42.103 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:59:42.904 | [0;33mWARN  [ajp-bio-8009-exec-109] [50.7.104.18] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 07:59:43.405 | [m
+INFO   | jvm 1    | main    | 2019/02/04 07:59:47.811 | [0;33mWARN  [ajp-bio-8009-exec-107] [50.7.104.18] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 07:59:48.312 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:09:28.468 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:09:28.968 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:09:40.483 | [0;33mWARN  [ajp-bio-8009-exec-111] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:09:40.684 | [m[0;33mWARN  [ajp-bio-8009-exec-107] [69.12.71.130] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:09:41.184 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:09:44.789 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:09:45.289 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:19:27.832 | [0;33mWARN  [ajp-bio-8009-exec-107] [87.237.61.116] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:19:28.333 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:19:39.948 | [0;33mWARN  [ajp-bio-8009-exec-106] [87.237.61.116] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:19:40.449 | [m[0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.116] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:19:40.950 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:19:45.155 | [0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.116] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:19:45.656 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:29:27.805 | [0;33mWARN  [ajp-bio-8009-exec-109] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:29:28.309 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:29:39.722 | [0;33mWARN  [ajp-bio-8009-exec-109] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:29:40.223 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:29:40.323 | [0;33mWARN  [ajp-bio-8009-exec-109] [192.240.126.82] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:29:40.824 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:29:45.229 | [0;33mWARN  [ajp-bio-8009-exec-109] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:29:45.729 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:39:28.974 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:39:29.475 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:39:40.990 | [0;33mWARN  [ajp-bio-8009-exec-110] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:39:41.191 | [m[0;33mWARN  [ajp-bio-8009-exec-110] [69.12.68.122] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:39:41.691 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:39:45.296 | [0;33mWARN  [ajp-bio-8009-exec-111] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:39:45.797 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:49:29.137 | [0;33mWARN  [ajp-bio-8009-exec-110] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:49:29.638 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:49:41.451 | [0;33mWARN  [ajp-bio-8009-exec-107] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:49:41.754 | [m[0;33mWARN  [ajp-bio-8009-exec-107] [87.237.61.117] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:49:42.255 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:49:46.360 | [0;33mWARN  [ajp-bio-8009-exec-107] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:49:46.860 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:59:27.604 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:59:28.105 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:59:39.520 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:59:40.021 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:59:40.221 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.82] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 08:59:40.722 | [m
+INFO   | jvm 1    | main    | 2019/02/04 08:59:45.127 | [0;33mWARN  [ajp-bio-8009-exec-107] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 08:59:45.628 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:09:28.475 | [0;33mWARN  [ajp-bio-8009-exec-109] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:09:28.975 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:09:40.590 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:09:40.790 | [m[0;33mWARN  [ajp-bio-8009-exec-111] [69.12.71.130] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 09:09:41.291 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:09:44.795 | [0;33mWARN  [ajp-bio-8009-exec-107] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:09:45.296 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:19:29.042 | [0;33mWARN  [ajp-bio-8009-exec-111] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:19:29.543 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:19:40.156 | [0;33mWARN  [ajp-bio-8009-exec-108] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:19:40.657 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:23:24.299 | [0;33mWARN  [ajp-bio-8009-exec-111] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:23:24.799 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:29:27.706 | [0;33mWARN  [ajp-bio-8009-exec-108] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:29:28.207 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:29:39.620 | [0;33mWARN  [ajp-bio-8009-exec-111] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:29:40.121 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:29:40.321 | [0;33mWARN  [ajp-bio-8009-exec-110] [192.240.126.82] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 09:29:40.822 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:29:45.127 | [0;33mWARN  [ajp-bio-8009-exec-110] [192.240.126.82] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:29:45.627 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:38:02.066 | [0;32mINFO  [pool-5-thread-2] [10.0.9.171] [ThreadDumpCollector] Grabbed maximum (50) of dumps 
+INFO   | jvm 1    | main    | 2019/02/04 09:38:02.366 | [m[0;32mINFO  [pool-6-thread-1] [10.0.9.171] [ThreadDumpCollector] Created zip file /tmp/threaddump7293198124278103970.zip containing 50 dumps.
+INFO   | jvm 1    | main    | 2019/02/04 09:38:02.867 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:39:29.368 | [0;33mWARN  [ajp-bio-8009-exec-112] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:39:29.869 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:39:41.282 | [0;33mWARN  [ajp-bio-8009-exec-108] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:39:41.582 | [m[0;33mWARN  [ajp-bio-8009-exec-111] [69.12.71.130] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 09:39:42.083 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:39:45.687 | [0;33mWARN  [ajp-bio-8009-exec-108] [69.12.71.130] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:39:46.188 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:49:29.360 | [0;33mWARN  [ajp-bio-8009-exec-111] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:49:29.861 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:49:48.583 | [0;33mWARN  [ajp-bio-8009-exec-108] [87.237.61.117] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:49:49.084 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:53:25.739 | [0;33mWARN  [ajp-bio-8009-exec-111] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:53:26.240 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:59:28.651 | [0;33mWARN  [ajp-bio-8009-exec-108] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:59:29.152 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:59:40.465 | [0;33mWARN  [ajp-bio-8009-exec-111] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:59:40.966 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:59:41.166 | [0;33mWARN  [ajp-bio-8009-exec-108] [192.240.126.74] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 09:59:41.667 | [m
+INFO   | jvm 1    | main    | 2019/02/04 09:59:45.971 | [0;33mWARN  [ajp-bio-8009-exec-108] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 09:59:46.472 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:09:29.105 | [0;33mWARN  [ajp-bio-8009-exec-108] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:09:29.606 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:09:41.220 | [0;33mWARN  [ajp-bio-8009-exec-111] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:09:41.420 | [m[0;33mWARN  [ajp-bio-8009-exec-113] [69.12.68.122] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 10:09:41.921 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:09:45.425 | [0;33mWARN  [ajp-bio-8009-exec-113] [69.12.68.122] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:09:45.925 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:19:28.906 | [0;33mWARN  [ajp-bio-8009-exec-106] [87.237.61.115] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:19:29.406 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:19:41.020 | [0;33mWARN  [ajp-bio-8009-exec-112] [87.237.61.115] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:19:41.521 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:19:41.621 | [0;33mWARN  [ajp-bio-8009-exec-112] [87.237.61.115] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 10:19:42.121 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:19:46.327 | [0;33mWARN  [ajp-bio-8009-exec-112] [87.237.61.115] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:19:46.828 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:29:28.388 | [0;33mWARN  [ajp-bio-8009-exec-110] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:29:28.888 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:29:40.403 | [0;33mWARN  [ajp-bio-8009-exec-113] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:29:40.904 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:29:41.004 | [0;33mWARN  [ajp-bio-8009-exec-113] [192.240.126.74] [AcceleratorAuthenticationProvider] Brute force attack attempt for non existing user name suganya.selvarasu@wipro.com
+INFO   | jvm 1    | main    | 2019/02/04 10:29:41.505 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:29:45.710 | [0;33mWARN  [ajp-bio-8009-exec-113] [192.240.126.74] [RequireHardLoginBeforeControllerHandler] missing secure token in session, redirecting
+INFO   | jvm 1    | main    | 2019/02/04 10:29:46.211 | [m
+INFO   | jvm 1    | main    | 2019/02/04 10:37:42.236 | [0;32mINFO  [ajp-bio-8009-exec-112] [10.0.9.171] [SupportZipGenerator] SupportZipGenerator instantiating ...
+INFO   | jvm 1    | main    | 2019/02/04 10:37:42.737 | [m
