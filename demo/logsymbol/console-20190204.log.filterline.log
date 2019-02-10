@@ -1,0 +1,6 @@
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultSubcode: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultString: java.net.SocketTimeoutException: Read timed out
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultActor: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultNode: 
+INFO   | jvm 1    | main    | 2019/02/04 04:10:34.918 |  faultDetail: 
