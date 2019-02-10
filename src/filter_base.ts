@@ -6,6 +6,7 @@ import * as vscode from 'vscode';
 class FilterLineBase{
 
     protected showInfo(text: string){
+        console.log(text);
         vscode.window.showInformationMessage(text);
     }
     protected showError(text: string){
@@ -20,7 +21,6 @@ class FilterLineBase{
         }
 
         let doc = editor.document;
-        console.log(doc.languageId);
         if(doc.isDirty){
             this.showError('Save before filter line');
             return undefined;
@@ -29,39 +29,58 @@ class FilterLineBase{
     }
 
     protected filterFile(filePath: string){
-        // read file
         const readline = require('readline');
         const fs = require('fs');
         var path = require('path');
 
-        const rl = readline.createInterface({
-            input: fs.createReadStream(filePath)
-        });
+        let inputPath = filePath;
 
-        let outputPath = filePath + '.filterline' + path.extname(filePath);
-        console.log('output : ' + outputPath);
-        if(fs.existsSync(outputPath)){
-            console.log('output file already exist, force delete');
-            fs.unlinkSync(outputPath);
+        // special path tail
+        let ext = path.extname(inputPath);
+        let tail = '.filterline' + ext;
+
+        // overwrite mode ?
+        let isOverwriteMode = inputPath.indexOf(tail) !== -1;
+
+        let outputPath = '';
+        if (isOverwriteMode) {
+            outputPath = inputPath;
+
+            // change input path
+            let newInputPath = inputPath + '.last' + ext;
+            fs.renameSync(inputPath, newInputPath);
+            inputPath = newInputPath;
+        } else {
+            outputPath = inputPath + tail;
+
+            if(fs.existsSync(outputPath)){
+                console.log('output file already exist, force delete when not under overwrite mode');
+                fs.unlinkSync(outputPath);
+            }
         }
 
+        console.log('overwrite mode: ' + (isOverwriteMode?'on':'off'));
+        console.log('input path: ' + inputPath);
+        console.log('output path: ' + outputPath);
+
+        // open read file
+        const readStream = readline.createInterface({
+            input: fs.createReadStream(inputPath)
+        });
+
         // open write file
-        let output = fs.createWriteStream(outputPath);
-        output.on('open', ()=>{
+        let writeStream = fs.createWriteStream(outputPath);
+        writeStream.on('open', ()=>{
             // filter line by line
-            rl.on('line', (line: string)=>{
-                
+            readStream.on('line', (line: string)=>{
                 // console.log('line ', line);
                 let fixedline = this.matchLine(line);
                 if(fixedline !== undefined){
-                    output.write(fixedline + '\n');
+                    writeStream.write(fixedline + '\n');
                 }
-
             }).on('close',()=>{
-                console.log('finish');
-                this.showInfo('complete');
+                this.showInfo('Filter completed :)');
                 vscode.workspace.openTextDocument(outputPath).then((doc: vscode.TextDocument)=>{
-                    console.log('opened');
                     vscode.window.showTextDocument(doc);
                 });
             });
