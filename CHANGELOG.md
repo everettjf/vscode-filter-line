@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to the "filter-line" extension will be documented in this file.
 
-## [1.2.0]
+## [1.2.x]
 - Fix issue : https://github.com/everettjf/vscode-filter-line/issues/6
 
 ## [1.1.x]
