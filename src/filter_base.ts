@@ -50,7 +50,7 @@ class FilterLineBase{
             outputPath = inputPath;
 
             // change input path
-            let newInputPath = inputPath + '.last' + ext;
+            let newInputPath = inputPath + Math.floor(Math.random()*1000) + ext;
             console.log('will rename');
             console.log('from : ' + inputPath);
             console.log('to: ' + newInputPath);
@@ -103,6 +103,14 @@ class FilterLineBase{
                 }
             }).on('close',()=>{
                 this.showInfo('Filter completed :)');
+
+                try{
+                    if(isOverwriteMode){
+                        fs.unlinkSync(inputPath);
+                    }
+                }catch(e){
+                    console.log(e);
+                }
                 vscode.workspace.openTextDocument(outputPath).then((doc: vscode.TextDocument)=>{
                     vscode.window.showTextDocument(doc);
                 });
