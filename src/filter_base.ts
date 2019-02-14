@@ -2,6 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { fdatasyncSync } from 'fs';
 
 class FilterLineBase{
 
@@ -29,6 +30,8 @@ class FilterLineBase{
     }
 
     protected filterFile(filePath: string){
+        console.log('will filter file : ' + filePath);
+
         const readline = require('readline');
         const fs = require('fs');
         var path = require('path');
@@ -48,7 +51,24 @@ class FilterLineBase{
 
             // change input path
             let newInputPath = inputPath + '.last' + ext;
-            fs.renameSync(inputPath, newInputPath);
+            console.log('will rename');
+            console.log('from : ' + inputPath);
+            console.log('to: ' + newInputPath);
+            try{
+                if(fs.existsSync(newInputPath)){
+                    fs.unlinkSync(newInputPath);
+                }
+            }catch(e){
+                this.showError('unlink error : ' + e);
+                return;
+            }
+            try{
+                fs.renameSync(inputPath, newInputPath);
+            }catch(e){
+                this.showError('rename error : ' + e);
+                return;
+            }
+            console.log('after rename');
             inputPath = newInputPath;
         } else {
             outputPath = inputPath + tail;
@@ -63,16 +83,19 @@ class FilterLineBase{
         console.log('input path: ' + inputPath);
         console.log('output path: ' + outputPath);
 
-        // open read file
-        const readStream = readline.createInterface({
-            input: fs.createReadStream(inputPath)
-        });
 
         // open write file
         let writeStream = fs.createWriteStream(outputPath);
         writeStream.on('open', ()=>{
+            console.log('write stream opened');
+            
+            // open read file
+            const readLine = readline.createInterface({
+                input: fs.createReadStream(inputPath)
+            });
+            
             // filter line by line
-            readStream.on('line', (line: string)=>{
+            readLine.on('line', (line: string)=>{
                 // console.log('line ', line);
                 let fixedline = this.matchLine(line);
                 if(fixedline !== undefined){
@@ -84,6 +107,8 @@ class FilterLineBase{
                     vscode.window.showTextDocument(doc);
                 });
             });
+        }).on('error',(e :Error)=>{
+            console.log('can not open write stream : ' + e);
         });
     }
 
@@ -105,6 +130,7 @@ class FilterLineBase{
                 return;
             }
             if(doc === undefined){
+                console.log('undefined doc');
                 return;
             }
 
