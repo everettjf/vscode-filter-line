@@ -50,7 +50,7 @@ class FilterLineBase{
             outputPath = inputPath;
 
             // change input path
-            let newInputPath = inputPath + Math.floor(Math.random()*1000) + ext;
+            let newInputPath = inputPath + Math.floor(Date.now()/1000) + ext;
             console.log('will rename');
             console.log('from : ' + inputPath);
             console.log('to: ' + newInputPath);
