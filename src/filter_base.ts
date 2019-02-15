@@ -29,8 +29,6 @@ class FilterLineBase{
     }
 
     protected filterFile(filePath: string){
-        console.log('will filter file : ' + filePath);
-
         const readline = require('readline');
         const fs = require('fs');
         var path = require('path');
@@ -50,9 +48,6 @@ class FilterLineBase{
 
             // change input path
             let newInputPath = inputPath + Math.floor(Date.now()/1000) + ext;
-            console.log('will rename');
-            console.log('from : ' + inputPath);
-            console.log('to: ' + newInputPath);
             try{
                 if(fs.existsSync(newInputPath)){
                     fs.unlinkSync(newInputPath);
@@ -108,6 +103,7 @@ class FilterLineBase{
                 }
             }).on('close',()=>{
                 this.showInfo('Filter completed :)');
+                writeStream.close();
 
                 try{
                     if(isOverwriteMode){
@@ -122,6 +118,8 @@ class FilterLineBase{
             });
         }).on('error',(e :Error)=>{
             console.log('can not open write stream : ' + e);
+        }).on('close', ()=>{
+            console.log('closed');
         });
     }
 
