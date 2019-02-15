@@ -108,6 +108,7 @@ class FilterLineBase{
                 }
             }).on('close',()=>{
                 this.showInfo('Filter completed :)');
+                writeStream.close();
 
                 try{
                     if(isOverwriteMode){
@@ -122,6 +123,8 @@ class FilterLineBase{
             });
         }).on('error',(e :Error)=>{
             console.log('can not open write stream : ' + e);
+        }).on('close', ()=>{
+            console.log('closed');
         });
     }
 
