@@ -74,7 +74,13 @@ class FilterLineBase{
 
             if(fs.existsSync(outputPath)){
                 console.log('output file already exist, force delete when not under overwrite mode');
-                fs.unlinkSync(outputPath);
+                let tmpPath = outputPath + Math.floor(Date.now()/1000) + ext;
+                try{
+                    fs.renameSync(outputPath, tmpPath);
+                    fs.unlinkSync(tmpPath);
+                }catch(e){
+                    console.log('remove error : ' + e);
+                }
             }
         }
 
