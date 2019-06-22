@@ -21,7 +21,7 @@ class FilterConfigReader{
 
         let editor = vscode.window.activeTextEditor;
         if(!editor){
-            callback(false, 'No file selected');
+            callback(false, 'No file selected(when read)');
             return;
         }
 

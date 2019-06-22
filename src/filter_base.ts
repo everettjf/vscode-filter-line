@@ -13,19 +13,64 @@ class FilterLineBase{
         vscode.window.showErrorMessage(text);
     }
 
-    protected getValidDocument(): vscode.TextDocument | undefined{
+    protected getDocumentPathToBeFilter(callback : (docPath: string)=>void){
         let editor = vscode.window.activeTextEditor;
         if(!editor){
-            this.showError('No file selected');
-            return undefined;
+            this.showError('No file selected (Or file is too large. For how to filter large file, please visit README)');
+            callback('');
+            return;
         }
 
         let doc = editor.document;
         if(doc.isDirty){
             this.showError('Save before filter line');
-            return undefined;
+            callback('');
+            return;
         }
-        return doc;
+
+        let filePath = doc.fileName;
+        let fileName = filePath.replace(/^.*[\\\/]/, '');
+        let fileDir = filePath.substring(0, filePath.length - fileName.length);
+        console.log("filePath=" + filePath);
+        console.log("fileName=" + fileName);
+        console.log("fileDir=" + fileDir);
+
+        if (fileName !== 'filterline') {
+            callback(filePath);
+            return;
+        }
+
+        console.log('large file mode');
+
+        const fs = require('fs');
+        fs.readdir(fileDir, (err : any,files : any) => {
+
+            let pickableFiles:string[] = [];
+            files.forEach((file : any) => {
+                console.log(file);
+                
+                if (fs.lstatSync(fileDir + file).isDirectory()) {
+                    return;
+                }
+                if (file === '.DS_Store' || file === 'filterline') {
+                    return;
+                }
+
+                pickableFiles.push(file);
+            });
+
+            pickableFiles.sort();
+
+            vscode.window.showQuickPick(pickableFiles).then((pickedFile:string|undefined) => {
+                if (pickedFile === undefined) {
+                    return;
+                }
+                let largeFilePath = fileDir + pickedFile;
+                console.log(largeFilePath);
+                callback(largeFilePath);
+            });
+        });
+
     }
 
     protected filterFile(filePath: string){
@@ -128,24 +173,24 @@ class FilterLineBase{
     }
 
     protected prepare(callback : (succeed: boolean)=>void){
+    
     }
+
     public filter(){
-        let doc = this.getValidDocument();
-        if(doc === undefined){
-            return;
-        }
-        console.log('file : ' + doc.fileName);
-
-        this.prepare((succeed)=>{
-            if(!succeed){
-                return;
-            }
-            if(doc === undefined){
-                console.log('undefined doc');
+        this.getDocumentPathToBeFilter((docPath) => {
+            if (docPath === '') {
                 return;
             }
 
-            this.filterFile(doc.fileName);
+            console.log('will filter file :' + docPath);
+
+            this.prepare((succeed)=>{
+                if(!succeed){
+                    return;
+                }
+    
+                this.filterFile(docPath);
+            });
         });
     }
 }

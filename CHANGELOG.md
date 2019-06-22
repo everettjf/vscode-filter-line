@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "filter-line" extension will be documented in this file.
 
+## [1.3.x]
+- Support large file filter : https://github.com/everettjf/vscode-filter-line/issues/10
+
 ## [1.2.x]
 - Fix issue : https://github.com/everettjf/vscode-filter-line/issues/6
 
@@ -8,7 +11,7 @@ All notable changes to the "filter-line" extension will be documented in this fi
 - Bug fixed
 
 ## [1.0.x]
-- Many bug fixed
+- Many bugs fixed
 
 ## [0.9.x]
 - Initial release
