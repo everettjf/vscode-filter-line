@@ -71,44 +71,54 @@
         "menus": {
             "explorer/context": [
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByInputStringMenu",
                     "group": "4_filterLine@1"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByInputRegexMenu",
                     "group": "4_filterLine@2"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByNotContainInputStringMenu",
                     "group": "4_filterLine@3"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByNotMatchInputRegexMenu",
                     "group": "4_filterLine@4"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByConfigFileMenu",
                     "group": "4_filterLine@5"
                 }
             ],
             "editor/title/context": [
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByInputStringMenu",
                     "group": "4_filterLine@1"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByInputRegexMenu",
                     "group": "4_filterLine@2"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByNotContainInputStringMenu",
                     "group": "4_filterLine@3"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByNotMatchInputRegexMenu",
                     "group": "4_filterLine@4"
                 },
                 {
+                    "when": "resourceScheme == file",
                     "command": "extension.filterLineByConfigFileMenu",
                     "group": "4_filterLine@5"
                 }

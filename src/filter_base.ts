@@ -34,6 +34,16 @@ class FilterLineBase{
         }
 
         if (filePath === undefined) {
+            this.showError('Can not get valid file path');
+            callback('');
+            return;
+        }
+
+        const fs = require('fs');
+        let stats = fs.statSync(filePath);
+        if (!stats.isFile()) {
+            this.showError('Can only filter file');
+            callback('');
             return;
         }
 
@@ -50,7 +60,6 @@ class FilterLineBase{
 
         console.log('large file mode');
 
-        const fs = require('fs');
         fs.readdir(fileDir, (err : any,files : any) => {
 
             let pickableFiles:string[] = [];
