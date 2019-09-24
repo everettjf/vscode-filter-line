@@ -51,11 +51,68 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(filter);
     });
 
+    let disposable_inputstring_menu = vscode.commands.registerCommand('extension.filterLineByInputStringMenu', (fileUri) => {
+        if (typeof fileUri === 'undefined' || !(fileUri instanceof vscode.Uri)) {
+            console.warn('File URI validation failed');
+            return;
+        }
+        let filter = new FilterLineByInputString();
+        filter.filter(fileUri.fsPath);
+        context.subscriptions.push(filter);
+    });
+
+    let disposable_inputregex_menu = vscode.commands.registerCommand('extension.filterLineByInputRegexMenu', (fileUri) => {
+        if (typeof fileUri === 'undefined' || !(fileUri instanceof vscode.Uri)) {
+            console.warn('File URI validation failed');
+            return;
+        }
+        let filter = new FilterLineByInputRegex();
+        filter.filter(fileUri.fsPath);
+        context.subscriptions.push(filter);
+    });
+
+    let disposable_notcontaininputstring_menu = vscode.commands.registerCommand('extension.filterLineByNotContainInputStringMenu', (fileUri) => {
+        if (typeof fileUri === 'undefined' || !(fileUri instanceof vscode.Uri)) {
+            console.warn('File URI validation failed');
+            return;
+        }
+        let filter = new FilterLineByInputString();
+        filter.notcontain = true;
+        filter.filter(fileUri.fsPath);
+        context.subscriptions.push(filter);
+    });
+
+    let disposable_notmatchinputregex_menu = vscode.commands.registerCommand('extension.filterLineByNotMatchInputRegexMenu', (fileUri) => {
+        if (typeof fileUri === 'undefined' || !(fileUri instanceof vscode.Uri)) {
+            console.warn('File URI validation failed');
+            return;
+        }
+        let filter = new FilterLineByInputRegex();
+        filter.notmatch = true;
+        filter.filter(fileUri.fsPath);
+        context.subscriptions.push(filter);
+    });
+
+    let disposable_configfile_menu = vscode.commands.registerCommand('extension.filterLineByConfigFileMenu', (fileUri) => {
+        if (typeof fileUri === 'undefined' || !(fileUri instanceof vscode.Uri)) {
+            console.warn('File URI validation failed');
+            return;
+        }
+        let filter = new FilterLineByConfigFile();
+        filter.filter(fileUri.fsPath);
+        context.subscriptions.push(filter);
+    });
+
     context.subscriptions.push(disposable_inputstring);
     context.subscriptions.push(disposable_inputregex);
     context.subscriptions.push(disposable_notcontaininputstring);
     context.subscriptions.push(disposable_notmatchinputregex);
     context.subscriptions.push(disposable_configfile);
+    context.subscriptions.push(disposable_inputstring_menu);
+    context.subscriptions.push(disposable_inputregex_menu);
+    context.subscriptions.push(disposable_notcontaininputstring_menu);
+    context.subscriptions.push(disposable_notmatchinputregex_menu);
+    context.subscriptions.push(disposable_configfile_menu);
 }
 
 // this method is called when your extension is deactivated
