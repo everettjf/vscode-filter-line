@@ -13,22 +13,30 @@ class FilterLineBase{
         vscode.window.showErrorMessage(text);
     }
 
-    protected getDocumentPathToBeFilter(callback : (docPath: string)=>void){
-        let editor = vscode.window.activeTextEditor;
-        if(!editor){
-            this.showError('No file selected (Or file is too large. For how to filter large file, please visit README)');
-            callback('');
+    protected getDocumentPathToBeFilter(callback : (docPath: string)=>void, filePath_?: string){
+        let filePath = filePath_;
+        if (filePath_ === undefined) {
+            let editor = vscode.window.activeTextEditor;
+            if(!editor){
+                this.showError('No file selected (Or file is too large. For how to filter large file, please visit README)');
+                callback('');
+                return;
+            }
+
+            let doc = editor.document;
+            if(doc.isDirty){
+                this.showError('Save before filter line');
+                callback('');
+                return;
+            }
+
+            filePath = doc.fileName;
+        }
+
+        if (filePath === undefined) {
             return;
         }
 
-        let doc = editor.document;
-        if(doc.isDirty){
-            this.showError('Save before filter line');
-            callback('');
-            return;
-        }
-
-        let filePath = doc.fileName;
         let fileName = filePath.replace(/^.*[\\\/]/, '');
         let fileDir = filePath.substring(0, filePath.length - fileName.length);
         console.log("filePath=" + filePath);
@@ -48,7 +56,7 @@ class FilterLineBase{
             let pickableFiles:string[] = [];
             files.forEach((file : any) => {
                 console.log(file);
-                
+
                 if (fs.lstatSync(fileDir + file).isDirectory()) {
                     return;
                 }
@@ -133,12 +141,12 @@ class FilterLineBase{
         let writeStream = fs.createWriteStream(outputPath);
         writeStream.on('open', ()=>{
             console.log('write stream opened');
-            
+
             // open read file
             const readLine = readline.createInterface({
                 input: fs.createReadStream(inputPath)
             });
-            
+
             // filter line by line
             readLine.on('line', (line: string)=>{
                 // console.log('line ', line);
@@ -173,10 +181,10 @@ class FilterLineBase{
     }
 
     protected prepare(callback : (succeed: boolean)=>void){
-    
+
     }
 
-    public filter(){
+    public filter(filePath?: string){
         this.getDocumentPathToBeFilter((docPath) => {
             if (docPath === '') {
                 return;
@@ -188,10 +196,10 @@ class FilterLineBase{
                 if(!succeed){
                     return;
                 }
-    
+
                 this.filterFile(docPath);
             });
-        });
+        }, filePath);
     }
 }
 
