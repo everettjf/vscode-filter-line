@@ -17,7 +17,12 @@
         "onCommand:extension.filterLineByInputRegex",
         "onCommand:extension.filterLineByNotContainInputString",
         "onCommand:extension.filterLineByNotMatchInputRegex",
-        "onCommand:extension.filterLineByConfigFile"
+        "onCommand:extension.filterLineByConfigFile",
+        "onCommand:extension.filterLineByInputStringMenu",
+        "onCommand:extension.filterLineByInputRegexMenu",
+        "onCommand:extension.filterLineByNotContainInputStringMenu",
+        "onCommand:extension.filterLineByNotMatchInputRegexMenu",
+        "onCommand:extension.filterLineByConfigFileMenu"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -41,8 +46,74 @@
             {
                 "command": "extension.filterLineByConfigFile",
                 "title": "Filter Line By Config File"
+            },
+            {
+                "command": "extension.filterLineByInputStringMenu",
+                "title": "Filter Line By Input String"
+            },
+            {
+                "command": "extension.filterLineByInputRegexMenu",
+                "title": "Filter Line By Input Regex"
+            },
+            {
+                "command": "extension.filterLineByNotContainInputStringMenu",
+                "title": "Filter Line By Not Contain Input String"
+            },
+            {
+                "command": "extension.filterLineByNotMatchInputRegexMenu",
+                "title": "Filter Line By Not Match Input Regex"
+            },
+            {
+                "command": "extension.filterLineByConfigFileMenu",
+                "title": "Filter Line By Config File"
             }
-        ]
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.filterLineByInputStringMenu",
+                    "group": "4_filterLine@1"
+                },
+                {
+                    "command": "extension.filterLineByInputRegexMenu",
+                    "group": "4_filterLine@2"
+                },
+                {
+                    "command": "extension.filterLineByNotContainInputStringMenu",
+                    "group": "4_filterLine@3"
+                },
+                {
+                    "command": "extension.filterLineByNotMatchInputRegexMenu",
+                    "group": "4_filterLine@4"
+                },
+                {
+                    "command": "extension.filterLineByConfigFileMenu",
+                    "group": "4_filterLine@5"
+                }
+            ],
+            "editor/title/context": [
+                {
+                    "command": "extension.filterLineByInputStringMenu",
+                    "group": "4_filterLine@1"
+                },
+                {
+                    "command": "extension.filterLineByInputRegexMenu",
+                    "group": "4_filterLine@2"
+                },
+                {
+                    "command": "extension.filterLineByNotContainInputStringMenu",
+                    "group": "4_filterLine@3"
+                },
+                {
+                    "command": "extension.filterLineByNotMatchInputRegexMenu",
+                    "group": "4_filterLine@4"
+                },
+                {
+                    "command": "extension.filterLineByConfigFileMenu",
+                    "group": "4_filterLine@5"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -53,10 +124,10 @@
     },
     "devDependencies": {
         "@types/mocha": "^2.2.42",
-        "@types/node": "^7.10.3",
+        "@types/node": "^12.7.5",
+        "vscode": "^1.1.36",
         "tslint": "^5.12.1",
-        "typescript": "^2.9.2",
-        "vscode": "^1.1.29"
+        "typescript": "^2.9.2"
     },
     "icon": "images/icon.png",
     "bugs": {
