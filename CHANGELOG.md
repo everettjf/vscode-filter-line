@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "filter-line" extension will be documented in this file.
 
+
+## [1.4.x]
+- Add context menu : https://github.com/everettjf/vscode-filter-line/pull/14 (Thanks to https://github.com/GOST-UA )
+
 ## [1.3.x]
 - Support large file filter : https://github.com/everettjf/vscode-filter-line/issues/10
 
