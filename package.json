@@ -17,12 +17,7 @@
         "onCommand:extension.filterLineByInputRegex",
         "onCommand:extension.filterLineByNotContainInputString",
         "onCommand:extension.filterLineByNotMatchInputRegex",
-        "onCommand:extension.filterLineByConfigFile",
-        "onCommand:extension.filterLineByInputStringMenu",
-        "onCommand:extension.filterLineByInputRegexMenu",
-        "onCommand:extension.filterLineByNotContainInputStringMenu",
-        "onCommand:extension.filterLineByNotMatchInputRegexMenu",
-        "onCommand:extension.filterLineByConfigFileMenu"
+        "onCommand:extension.filterLineByConfigFile"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -46,80 +41,60 @@
             {
                 "command": "extension.filterLineByConfigFile",
                 "title": "Filter Line By Config File"
-            },
-            {
-                "command": "extension.filterLineByInputStringMenu",
-                "title": "Filter Line By Input String"
-            },
-            {
-                "command": "extension.filterLineByInputRegexMenu",
-                "title": "Filter Line By Input Regex"
-            },
-            {
-                "command": "extension.filterLineByNotContainInputStringMenu",
-                "title": "Filter Line By Not Contain Input String"
-            },
-            {
-                "command": "extension.filterLineByNotMatchInputRegexMenu",
-                "title": "Filter Line By Not Match Input Regex"
-            },
-            {
-                "command": "extension.filterLineByConfigFileMenu",
-                "title": "Filter Line By Config File"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputStringMenu",
+                    "command": "extension.filterLineByInputString",
                     "group": "4_filterLine@1"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputRegexMenu",
+                    "command": "extension.filterLineByInputRegex",
                     "group": "4_filterLine@2"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotContainInputStringMenu",
+                    "command": "extension.filterLineByNotContainInputString",
                     "group": "4_filterLine@3"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotMatchInputRegexMenu",
+                    "command": "extension.filterLineByNotMatchInputRegex",
                     "group": "4_filterLine@4"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByConfigFileMenu",
+                    "command": "extension.filterLineByConfigFile",
                     "group": "4_filterLine@5"
                 }
             ],
             "editor/title/context": [
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputStringMenu",
+                    "command": "extension.filterLineByInputString",
                     "group": "4_filterLine@1"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputRegexMenu",
+                    "command": "extension.filterLineByInputRegex",
                     "group": "4_filterLine@2"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotContainInputStringMenu",
+                    "command": "extension.filterLineByNotContainInputString",
                     "group": "4_filterLine@3"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotMatchInputRegexMenu",
+                    "command": "extension.filterLineByNotMatchInputRegex",
                     "group": "4_filterLine@4"
                 },
                 {
                     "when": "resourceScheme == file",
-                    "command": "extension.filterLineByConfigFileMenu",
+                    "command": "extension.filterLineByConfigFile",
                     "group": "4_filterLine@5"
                 }
             ]

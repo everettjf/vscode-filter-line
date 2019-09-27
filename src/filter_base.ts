@@ -15,6 +15,8 @@ class FilterLineBase{
 
     protected getDocumentPathToBeFilter(callback : (docPath: string)=>void, filePath_?: string){
         let filePath = filePath_;
+        console.log('filepath = ' + filePath_);
+        
         if (filePath_ === undefined) {
             let editor = vscode.window.activeTextEditor;
             if(!editor){
