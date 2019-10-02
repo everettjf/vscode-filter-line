@@ -98,6 +98,19 @@
                     "group": "4_filterLine@5"
                 }
             ]
+        },
+        "configuration":{
+            "title": "Filter Line",
+            "properties": {
+                "filter-line.historySize": {
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1,
+                    "maximum": 50,
+                    "scope": "application",
+                    "description": "Filter patterns history size"
+                }
+            }
         }
     },
     "scripts": {

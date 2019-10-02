@@ -20,33 +20,33 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable_inputstring = vscode.commands.registerCommand('extension.filterLineByInputString', () => {
-        let filter = new FilterLineByInputString();
+        let filter = new FilterLineByInputString(context);
         filter.filter();
         context.subscriptions.push(filter);
     });
 
     let disposable_inputregex = vscode.commands.registerCommand('extension.filterLineByInputRegex', () => {
-        let filter = new FilterLineByInputRegex();
+        let filter = new FilterLineByInputRegex(context);
         filter.filter();
         context.subscriptions.push(filter);
     });
 
     let disposable_notcontaininputstring = vscode.commands.registerCommand('extension.filterLineByNotContainInputString', () => {
-        let filter = new FilterLineByInputString();
+        let filter = new FilterLineByInputString(context);
         filter.notcontain = true;
         filter.filter();
         context.subscriptions.push(filter);
     });
 
     let disposable_notmatchinputregex = vscode.commands.registerCommand('extension.filterLineByNotMatchInputRegex', () => {
-        let filter = new FilterLineByInputRegex();
+        let filter = new FilterLineByInputRegex(context);
         filter.notmatch = true;
         filter.filter();
         context.subscriptions.push(filter);
     });
 
     let disposable_configfile = vscode.commands.registerCommand('extension.filterLineByConfigFile', () => {
-        let filter = new FilterLineByConfigFile();
+        let filter = new FilterLineByConfigFile(context);
         filter.filter();
         context.subscriptions.push(filter);
     });
