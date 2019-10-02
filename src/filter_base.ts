@@ -4,6 +4,62 @@
 import * as vscode from 'vscode';
 
 class FilterLineBase{
+    protected ctx: vscode.ExtensionContext;
+    private history: any;
+    protected readonly NEW_PATTERN_CHOISE = 'New pattern...';
+
+    constructor(context: vscode.ExtensionContext) {
+        this.ctx = context;
+
+        this.history = this.ctx.globalState.get('history', {});
+        console.log(`History: ${JSON.stringify(this.history)}`);
+    }
+
+    protected getHistory(): any {
+        return this.history;
+    }
+
+    protected async updateHistory(hist: any) {
+        this.history = hist;
+        await this.ctx.globalState.update('history', hist);
+    }
+
+    protected getHistoryMaxSize(): number {
+        return vscode.workspace.getConfiguration('filter-line').get('historySize', 10);
+    }
+
+    protected async addToHistory(key: string, newEl: string) {
+        if (this.history[key] === undefined) {
+            console.warn(`History doesn't contain '${key}' field`);
+            return;
+        }
+
+        if (this.history[key].indexOf(newEl) === -1) {
+            const maxSz = this.getHistoryMaxSize();
+            if (this.history[key].length >= maxSz) {
+                for (let i = this.history[key].length; i > maxSz - 1; i--) {
+                    this.history[key].pop();
+                }
+            }
+            this.history[key].unshift(newEl);
+            await this.ctx.globalState.update('history', this.history);
+        }
+    }
+
+    protected async showHistoryPick(key: string) : Promise<string> {
+        if (this.history[key] === undefined) {
+            console.warn(`History doesn't contain '${key}' field`);
+            return this.NEW_PATTERN_CHOISE;
+        }
+
+        let usrChoice: string | undefined = undefined;
+        if (this.history[key].length) {
+            let picks: Array<string> = [...this.history[key]];
+            picks.push(this.NEW_PATTERN_CHOISE);
+            usrChoice = await vscode.window.showQuickPick(picks);
+        }
+        return (usrChoice === undefined) ? this.NEW_PATTERN_CHOISE : usrChoice;
+    }
 
     protected showInfo(text: string){
         console.log(text);
