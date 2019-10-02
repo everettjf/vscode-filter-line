@@ -17,7 +17,8 @@
         "onCommand:extension.filterLineByInputRegex",
         "onCommand:extension.filterLineByNotContainInputString",
         "onCommand:extension.filterLineByNotMatchInputRegex",
-        "onCommand:extension.filterLineByConfigFile"
+        "onCommand:extension.filterLineByConfigFile",
+        "onCommand:extension.filterLineBy"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -41,61 +42,25 @@
             {
                 "command": "extension.filterLineByConfigFile",
                 "title": "Filter Line By Config File"
+            },
+            {
+                "command": "extension.filterLineBy",
+                "title": "Filter Line By..."
             }
         ],
         "menus": {
             "explorer/context": [
                 {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputString",
+                    "when": "!explorerResourceIsFolder",
+                    "command": "extension.filterLineBy",
                     "group": "4_filterLine@1"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputRegex",
-                    "group": "4_filterLine@2"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotContainInputString",
-                    "group": "4_filterLine@3"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotMatchInputRegex",
-                    "group": "4_filterLine@4"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByConfigFile",
-                    "group": "4_filterLine@5"
                 }
             ],
             "editor/title/context": [
                 {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputString",
+                    "when": "!explorerResourceIsFolder",
+                    "command": "extension.filterLineBy",
                     "group": "4_filterLine@1"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByInputRegex",
-                    "group": "4_filterLine@2"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotContainInputString",
-                    "group": "4_filterLine@3"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByNotMatchInputRegex",
-                    "group": "4_filterLine@4"
-                },
-                {
-                    "when": "resourceScheme == file",
-                    "command": "extension.filterLineByConfigFile",
-                    "group": "4_filterLine@5"
                 }
             ]
         },
