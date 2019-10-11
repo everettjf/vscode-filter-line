@@ -4,11 +4,24 @@ import {FilterLineBase} from './filter_base';
 
 class FilterLineByInputRegex extends FilterLineBase{
     private _regex?: RegExp;
+    private readonly HIST_KEY = 'inputRegex';
 
     public notmatch: boolean = false;
 
-    protected prepare(callback : (succeed: boolean)=>void){
-        vscode.window.showInputBox().then(text => {
+    constructor(context: vscode.ExtensionContext) {
+        super(context);
+
+        let history = this.getHistory();
+        if (history[this.HIST_KEY] === undefined) {
+            history[this.HIST_KEY] = [];
+            this.updateHistory(history);
+        }
+    }
+
+    protected async prepare(callback : (succeed: boolean)=>void){
+        const usrChoice: string = await this.showHistoryPick(this.HIST_KEY);
+
+        const makeRegEx = async (text: string | undefined) => {
             if(text === undefined || text === ''){
                 // console.log('No input');
                 callback(false);
@@ -22,8 +35,15 @@ class FilterLineByInputRegex extends FilterLineBase{
                 callback(false);
                 return;
             }
+            await this.addToHistory(this.HIST_KEY, text);
             callback(true);
-        });
+        };
+
+        if (usrChoice !== this.NEW_PATTERN_CHOISE) {
+            makeRegEx(usrChoice);
+        } else {
+            vscode.window.showInputBox().then(makeRegEx);
+        }
     }
 
     protected matchLine(line: string): string | undefined{
