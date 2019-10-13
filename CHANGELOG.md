@@ -2,6 +2,9 @@
 All notable changes to the "filter-line" extension will be documented in this file.
 
 
+## [1.5.x]
+- Filter history : https://github.com/everettjf/vscode-filter-line/pull/16  (Thanks to https://github.com/GOST-UA )
+
 ## [1.4.x]
 - Add context menu : https://github.com/everettjf/vscode-filter-line/pull/14 (Thanks to https://github.com/GOST-UA )
 
