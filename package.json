@@ -2,7 +2,7 @@
     "name": "filter-line",
     "displayName": "Filter Line",
     "description": "Filter line by strings or regular expressions",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "publisher": "everettjf",
     "license": "MIT",
     "engines": {
@@ -64,7 +64,7 @@
                 }
             ]
         },
-        "configuration":{
+        "configuration": {
             "title": "Filter Line",
             "properties": {
                 "filter-line.historySize": {
