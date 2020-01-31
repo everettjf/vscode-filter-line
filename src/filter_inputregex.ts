@@ -2,35 +2,35 @@
 import * as vscode from 'vscode';
 import {FilterLineBase} from './filter_base';
 
-class FilterLineByInputRegex extends FilterLineBase{
+class FilterLineByInputRegex extends FilterLineBase {
     private _regex?: RegExp;
     private readonly HIST_KEY = 'inputRegex';
 
-    public notmatch: boolean = false;
+    public notmatch = false;
 
-    constructor(context: vscode.ExtensionContext) {
-        super(context);
+    constructor(context: vscode.ExtensionContext, logger: vscode.OutputChannel) {
+        super(context, logger);
 
-        let history = this.getHistory();
+        const history = this.getHistory();
         if (history[this.HIST_KEY] === undefined) {
             history[this.HIST_KEY] = [];
             this.updateHistory(history);
         }
     }
 
-    protected async prepare(callback : (succeed: boolean)=>void){
+    protected async prepare(callback: (succeed: boolean) => void) {
         const usrChoice: string = await this.showHistoryPick(this.HIST_KEY);
 
         const makeRegEx = async (text: string | undefined) => {
-            if(text === undefined || text === ''){
+            if (text === undefined || text === '') {
                 // console.log('No input');
                 callback(false);
                 return;
             }
             // console.log('input : ' + text);
-            try{
+            try {
                 this._regex = new RegExp(text);
-            }catch(e){
+            } catch (e) {
                 this.showError('Regex incorrect :' + e);
                 callback(false);
                 return;
@@ -39,30 +39,30 @@ class FilterLineByInputRegex extends FilterLineBase{
             callback(true);
         };
 
-        if (usrChoice !== this.NEW_PATTERN_CHOISE) {
+        if (usrChoice !== this.NEW_PATTERN_CHOICE) {
             makeRegEx(usrChoice);
         } else {
             vscode.window.showInputBox().then(makeRegEx);
         }
     }
 
-    protected matchLine(line: string): string | undefined{
-        if(this._regex === undefined){
+    protected matchLine(line: string): string | undefined {
+        if (this._regex === undefined) {
             return undefined;
         }
-        if(this.notmatch){
-            if(line.match(this._regex) === null){
+        if (this.notmatch) {
+            if (line.match(this._regex) === null) {
                 return line;
             }
-        }else{
-            if(line.match(this._regex) !== null){
+        } else {
+            if (line.match(this._regex) !== null) {
                 return line;
             }
         }
         return undefined;
     }
 
-    dispose(){
+    dispose() {
     }
 }
 

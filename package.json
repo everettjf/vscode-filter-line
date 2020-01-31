@@ -74,6 +74,12 @@
                     "maximum": 50,
                     "scope": "application",
                     "description": "Filter patterns history size"
+                },
+                "filter-line.saveAfterFiltering": {
+                    "type": "boolean",
+                    "default": false,
+                    "scope": "application",
+                    "description": "Save filter results on filesystem"
                 }
             }
         }
@@ -87,10 +93,13 @@
     },
     "devDependencies": {
         "@types/mocha": "^2.2.42",
-        "@types/node": "^12.7.5",
-        "vscode": "^1.1.36",
+        "@types/node": "^13.6.0",
+        "@typescript-eslint/eslint-plugin": "^2.18.0",
+        "@typescript-eslint/parser": "^2.18.0",
+        "eslint": "^6.8.0",
         "tslint": "^5.12.1",
-        "typescript": "^2.9.2"
+        "typescript": "^3.7.2",
+        "vscode": "^1.1.36"
     },
     "icon": "images/icon.png",
     "bugs": {
