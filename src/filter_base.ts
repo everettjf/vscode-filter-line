@@ -2,17 +2,83 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import fs = require('fs');
+import path = require('path');
+import os = require('os');
+import {promisify} from 'util';
+import stream = require('stream');
 
-class FilterLineBase{
+const pipeline = promisify(stream.pipeline);
+import { FilterStream, TextDocumentReadStream, statAsync, moveAsync, unlinkAsync } from './util';
+
+
+class Filter {
+    protected readonly TAIL = 'filterline';
+
+    constructor(protected fromUri: vscode.Uri,
+                protected filterCallback: (line: string) => string | boolean | undefined,
+                protected logger: vscode.OutputChannel) {
+    }
+
+    public async process(): Promise<vscode.Uri> {
+        let ext = path.extname(this.fromUri.path);
+        const timestamp = new Date().getTime().toString();
+        let outBase = '';
+        if (this.fromUri.scheme !== 'file') {
+            outBase = this.fromUri.path;
+            ext = (ext === '') ? '.txt' : ext;
+        } else {
+            outBase = this.fromUri.fsPath.split(path.sep).slice(-1)[0].split('.').slice(0, -1).join('.');
+        }
+
+        let outPath = `${outBase}.${this.TAIL}-${timestamp}${ext}`;
+        outPath = `${os.tmpdir()}${path.sep}${outPath}`;
+
+        await pipeline(
+            this.createInputStream(),
+            new FilterStream(this.filterCallback),
+            fs.createWriteStream(outPath)
+        );
+
+        return vscode.Uri.parse(`file:${outPath}`);
+    }
+
+    protected createInputStream(): stream.Readable {
+        if (this.fromUri.scheme === 'file') {
+            const doc = this.findOpenedDoc();
+            if (doc !== undefined && doc.isDirty) {
+                return new TextDocumentReadStream(doc, {encoding: 'utf-8'});
+            }
+
+            return fs.createReadStream(this.fromUri.fsPath, {encoding: 'utf-8'});
+        } else {
+            const doc = this.findOpenedDoc();
+
+            if (doc === undefined) {
+                this.logger.appendLine('Unable to find open document for provided URI');
+                throw Error('TextDocument not found');
+            }
+
+            return new TextDocumentReadStream(doc, {encoding: 'utf-8'});
+        }
+    }
+
+    protected findOpenedDoc(): vscode.TextDocument | undefined {
+        return vscode.workspace.textDocuments.find(el => el.uri.path === this.fromUri.path);
+    }
+}
+
+class FilterLineBase {
     protected ctx: vscode.ExtensionContext;
     private history: any;
-    protected readonly NEW_PATTERN_CHOISE = 'New pattern...';
+    protected readonly NEW_PATTERN_CHOICE = 'New pattern...';
+    protected readonly LARGE_MODE_THR = (30 * 1024 * 1024);
 
-    constructor(context: vscode.ExtensionContext) {
+    constructor(context: vscode.ExtensionContext, protected logger: vscode.OutputChannel) {
         this.ctx = context;
-
         this.history = this.ctx.globalState.get('history', {});
-        console.log(`History: ${JSON.stringify(this.history)}`);
+
+        this.logger.appendLine(`Temp path: ${os.tmpdir()}`);
     }
 
     protected getHistory(): any {
@@ -30,7 +96,7 @@ class FilterLineBase{
 
     protected async addToHistory(key: string, newEl: string) {
         if (this.history[key] === undefined) {
-            console.warn(`History doesn't contain '${key}' field`);
+            this.logger.appendLine(`History doesn't contain '${key}' field`);
             return;
         }
 
@@ -46,227 +112,144 @@ class FilterLineBase{
         }
     }
 
-    protected async showHistoryPick(key: string) : Promise<string> {
+    protected async showHistoryPick(key: string): Promise<string> {
         if (this.history[key] === undefined) {
-            console.warn(`History doesn't contain '${key}' field`);
-            return this.NEW_PATTERN_CHOISE;
+            this.logger.appendLine(`History doesn't contain '${key}' field`);
+            return this.NEW_PATTERN_CHOICE;
         }
 
         let usrChoice: string | undefined = undefined;
         if (this.history[key].length) {
-            let picks: Array<string> = [...this.history[key]];
-            picks.push(this.NEW_PATTERN_CHOISE);
+            const picks: Array<string> = [...this.history[key]];
+            picks.push(this.NEW_PATTERN_CHOICE);
             usrChoice = await vscode.window.showQuickPick(picks);
         }
-        return (usrChoice === undefined) ? this.NEW_PATTERN_CHOISE : usrChoice;
+        return (usrChoice === undefined) ? this.NEW_PATTERN_CHOICE : usrChoice;
     }
 
-    protected showInfo(text: string){
-        console.log(text);
+    protected getSaveAfterFilteringFlag(): boolean {
+        return vscode.workspace.getConfiguration('filter-line').get('saveAfterFiltering', false);
+    }
+
+    protected showInfo(text: string) {
+        this.logger.appendLine(text);
         vscode.window.showInformationMessage(text);
     }
-    protected showError(text: string){
+    protected showError(text: string) {
+        this.logger.appendLine(text);
         vscode.window.showErrorMessage(text);
     }
 
-    protected getDocumentPathToBeFilter(callback : (docPath: string)=>void, filePath_?: string){
-        let filePath = filePath_;
-        console.log('filepath = ' + filePath_);
-        
-        if (filePath_ === undefined) {
-            let editor = vscode.window.activeTextEditor;
-            if(!editor){
-                this.showError('No file selected (Or file is too large. For how to filter large file, please visit README)');
-                callback('');
-                return;
-            }
-
-            let doc = editor.document;
-            if(doc.isDirty){
-                this.showError('Save before filter line');
-                callback('');
-                return;
-            }
-
-            filePath = doc.fileName;
-        }
-
-        if (filePath === undefined) {
-            this.showError('Can not get valid file path');
-            callback('');
-            return;
-        }
-
-        const fs = require('fs');
-        let stats = fs.statSync(filePath);
-        if (!stats.isFile()) {
-            this.showError('Can only filter file');
-            callback('');
-            return;
-        }
-
-        let fileName = filePath.replace(/^.*[\\\/]/, '');
-        let fileDir = filePath.substring(0, filePath.length - fileName.length);
-        console.log("filePath=" + filePath);
-        console.log("fileName=" + fileName);
-        console.log("fileDir=" + fileDir);
-
-        if (fileName !== 'filterline') {
-            callback(filePath);
-            return;
-        }
-
-        console.log('large file mode');
-
-        fs.readdir(fileDir, (err : any,files : any) => {
-
-            let pickableFiles:string[] = [];
-            files.forEach((file : any) => {
-                console.log(file);
-
-                if (fs.lstatSync(fileDir + file).isDirectory()) {
-                    return;
-                }
-                if (file === '.DS_Store' || file === 'filterline') {
-                    return;
-                }
-
-                pickableFiles.push(file);
-            });
-
-            pickableFiles.sort();
-
-            vscode.window.showQuickPick(pickableFiles).then((pickedFile:string|undefined) => {
-                if (pickedFile === undefined) {
-                    return;
-                }
-                let largeFilePath = fileDir + pickedFile;
-                console.log(largeFilePath);
-                callback(largeFilePath);
-            });
-        });
-
+    protected showWarning(text: string) {
+        this.logger.appendLine(text);
+        vscode.window.showWarningMessage(text);
     }
 
-    protected filterFile(filePath: string){
-        const readline = require('readline');
-        const fs = require('fs');
-        var path = require('path');
-
-        let inputPath = filePath;
-
-        // special path tail
-        let ext = path.extname(inputPath);
-        let tail = '.filterline' + ext;
-
-        // overwrite mode ?
-        let isOverwriteMode = inputPath.indexOf(tail) !== -1;
-
-        let outputPath = '';
-        if (isOverwriteMode) {
-            outputPath = inputPath;
-
-            // change input path
-            let newInputPath = inputPath + Math.floor(Date.now()/1000) + ext;
-            try{
-                if(fs.existsSync(newInputPath)){
-                    fs.unlinkSync(newInputPath);
-                }
-            }catch(e){
-                this.showError('unlink error : ' + e);
-                return;
+    protected getSourceUri(fileUri?: vscode.Uri): vscode.Uri | undefined {
+        if (fileUri === undefined) {
+            // Filtering was launched from command line
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) {
+                this.showError("No file selected or file is too large. For large files, use file's context menu. For more information please visit README");
+                return undefined;
             }
-            try{
-                fs.renameSync(inputPath, newInputPath);
-            }catch(e){
-                this.showError('rename error : ' + e);
-                return;
-            }
-            console.log('after rename');
-            inputPath = newInputPath;
+
+            return editor.document.uri;
         } else {
-            outputPath = inputPath + tail;
+            return fileUri;
+        }
+    }
 
-            if(fs.existsSync(outputPath)){
-                console.log('output file already exist, force delete when not under overwrite mode');
-                let tmpPath = outputPath + Math.floor(Date.now()/1000) + ext;
-                try{
-                    fs.renameSync(outputPath, tmpPath);
-                    fs.unlinkSync(tmpPath);
-                }catch(e){
-                    console.log('remove error : ' + e);
+    protected async filter_(uri: vscode.Uri) {
+        const tmpPath = await (new Filter(uri, (line) => this.matchLine(line), this.logger)).process();
+
+        const fInfo = await statAsync(tmpPath.fsPath);
+
+        const largeModeFlag = fInfo.size > this.LARGE_MODE_THR;
+        const saveFlag = this.getSaveAfterFilteringFlag();
+
+        let dstPath = tmpPath;
+        let processed = false;
+
+        if (saveFlag) {
+            if (uri.scheme !== 'file') {
+                this.showWarning("Don't know where to save file. Saved into temporary folder");
+            } else {
+                const dstBase = tmpPath.fsPath.split(path.sep).slice(-1)[0];
+                dstPath = vscode.Uri.parse(uri.fsPath.split(path.sep).slice(0, -1).join(path.sep) + path.sep + dstBase);
+                try {
+                    await moveAsync(tmpPath.fsPath, dstPath.fsPath);
+                } catch (error) {
+                    this.showError('Error occurred on save file to origin folder. Saved into temporary folder');
+                    dstPath = tmpPath;
+                }
+            }
+        } else {
+            if (largeModeFlag) {
+                this.showWarning('Filtered content is larger then Visual Studio Code limitations. Saved into temporary folder');
+            } else {
+                await vscode.commands.executeCommand('workbench.action.files.newUntitledFile');
+                const editor = vscode.window.activeTextEditor;
+
+                if (editor === undefined) {
+                    throw Error('Text Editor does not open');
+                }
+
+                const readStream = fs.createReadStream(tmpPath.fsPath, {encoding: 'utf-8', highWaterMark: 100 * 1024});
+
+                const doc = editor.document;
+
+                try {
+                    for await (const chunk of readStream) {
+                        const pos = doc.validatePosition(new vscode.Position(doc.lineCount, 0));
+                        await editor.edit(async edit => {
+                            edit.insert(pos, chunk);
+                        });
+                    }
+
+                    await unlinkAsync(tmpPath.fsPath);
+                    processed = true;
+                } catch (e) {
+                    if (e.name !== undefined && e.name === 'DISPOSED') {
+                        processed = true;
+                    }
                 }
             }
         }
 
-        console.log('overwrite mode: ' + (isOverwriteMode?'on':'off'));
-        console.log('input path: ' + inputPath);
-        console.log('output path: ' + outputPath);
+        if (!processed) {
+            const doc = await vscode.workspace.openTextDocument(dstPath);
+            await vscode.window.showTextDocument(doc);
+        }
 
-
-        // open write file
-        let writeStream = fs.createWriteStream(outputPath);
-        writeStream.on('open', ()=>{
-            console.log('write stream opened');
-
-            // open read file
-            const readLine = readline.createInterface({
-                input: fs.createReadStream(inputPath)
-            });
-
-            // filter line by line
-            readLine.on('line', (line: string)=>{
-                // console.log('line ', line);
-                let fixedline = this.matchLine(line);
-                if(fixedline !== undefined){
-                    writeStream.write(fixedline + '\n');
-                }
-            }).on('close',()=>{
-                this.showInfo('Filter completed :)');
-                writeStream.close();
-
-                try{
-                    if(isOverwriteMode){
-                        fs.unlinkSync(inputPath);
-                    }
-                }catch(e){
-                    console.log(e);
-                }
-                vscode.workspace.openTextDocument(outputPath).then((doc: vscode.TextDocument)=>{
-                    vscode.window.showTextDocument(doc);
-                });
-            });
-        }).on('error',(e :Error)=>{
-            console.log('can not open write stream : ' + e);
-        }).on('close', ()=>{
-            console.log('closed');
-        });
+        this.showInfo('Filtering completed :)');
     }
 
-    protected matchLine(line: string): string | undefined{
+    protected matchLine(line: string): string | undefined {
         return undefined;
     }
 
-    protected prepare(callback : (succeed: boolean)=>void){
-
+    protected prepare(callback: (succeed: boolean) => void) {
+        callback(true);
     }
 
-    public filter(filePath?: string){
-        this.getDocumentPathToBeFilter((docPath) => {
-            if (docPath === '') {
+    public filter(filePath?: vscode.Uri) {
+        const srcUri =this.getSourceUri(filePath);
+
+        if (srcUri === undefined) {
+            return;
+        }
+
+        this.logger.appendLine('will filter file: ' + srcUri.path);
+
+        this.prepare(async (succeed) => {
+            this.logger.appendLine(`Succeed ${succeed}`);
+            if (!succeed) {
                 return;
             }
 
-            console.log('will filter file :' + docPath);
-
-            this.prepare((succeed)=>{
-                if(!succeed){
-                    return;
-                }
-
-                this.filterFile(docPath);
-            });
-        }, filePath);
+            await this.filter_(srcUri);
+        });
     }
 }
 
