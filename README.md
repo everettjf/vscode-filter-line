@@ -50,19 +50,36 @@ Filter line for current opening file by strings/regular expressions, generating 
 
 ![byconfigfile](img/byconfigfile.gif)
 
+### Filter from Explorer file's context menu
+
+Filter files without opening from Explorer file's context menu. Especially useful for large files (>= 50MB) due to [vscode's limitation](https://github.com/microsoft/vscode/issues/31078).
+
+![explorer_ctx](img/explorer_ctx.png)
+
+### Filter from Title context menu
+
+Same as with Explorer context menu. Also can help with large files (>= 50MB) ([vscode's limitation](https://github.com/microsoft/vscode/issues/31078))
+
+![title_ctx](img/title_ctx.png)
+
+### Filters history
+
+Each "Input by..." filter option has history of N last patterns (configurable in extension settings)
+
+![filter_hist](img/filters_hist.png)
+
 ### Large file mode
 
-Since [vscode's limitation](https://github.com/microsoft/vscode/issues/31078), when filter large files (e.g. >= 50MB), vscode extension can not get the file name currently opened. But this extension provide an alternative. e.g. if you want to filter large file `~/log/file.log`, do follow steps below :
+Since [vscode's limitation](https://github.com/microsoft/vscode/issues/31078), when filter large files (e.g. >= 50MB), vscode extension can not get the current open document. As a workaround you can filter these files from context menu (both Title and Explorer).
 
-1. Create an empty file named `filterline` ( `~/log/filterline`) in the same directory with log file.
-2. Try to filter the empty file `filterline`.
-3. Now the extension will list all files in the same directory.
-4. Choose the one (`~/log/file.log`) you want to filter. 
+### Configurable saving of filtering results
+
+Extension settings has option for saving filtering result (disabled by default).
 
 
 #### Config file type
 
-1. There are 2 file types `filterline.json` and `filterline.eoml`. 
+1. There are 2 file types `filterline.json` and `filterline.eoml`.
 2. `eoml` is a simple config file format that created by me(`everettjf`), only for this project(`vscode-filter-line`) at present. For more information, please visit [eoml](https://github.com/everettjf/eoml).
 
 #### Config file format type
