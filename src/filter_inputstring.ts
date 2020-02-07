@@ -2,27 +2,27 @@
 import * as vscode from 'vscode';
 import { FilterLineBase } from './filter_base';
 
-class FilterLineByInputString extends FilterLineBase{
+class FilterLineByInputString extends FilterLineBase {
     private _inputstring?: string;
     private readonly HIST_KEY = 'inputStr';
 
-    public notcontain: boolean = false;
+    public notcontain = false;
 
-    constructor(context: vscode.ExtensionContext) {
-        super(context);
+    constructor(context: vscode.ExtensionContext, logger: vscode.OutputChannel) {
+        super(context, logger);
 
-        let history = this.getHistory();
+        const history = this.getHistory();
         if (history[this.HIST_KEY] === undefined) {
             history[this.HIST_KEY] = [];
             this.updateHistory(history);
         }
     }
 
-    protected async prepare(callback : (succeed: boolean)=>void){
-        let usrChoice: string = await this.showHistoryPick(this.HIST_KEY);
+    protected async prepare(callback: (succeed: boolean) => void) {
+        const usrChoice: string = await this.showHistoryPick(this.HIST_KEY);
 
         const makeInputStr = (text: string | undefined) => {
-            if(text === undefined || text === ''){
+            if (text === undefined || text === '') {
                 console.log('No input');
                 callback(false);
                 return;
@@ -34,30 +34,30 @@ class FilterLineByInputString extends FilterLineBase{
             callback(true);
         };
 
-        if (usrChoice !== this.NEW_PATTERN_CHOISE) {
+        if (usrChoice !== this.NEW_PATTERN_CHOICE) {
             makeInputStr(usrChoice);
         } else {
             vscode.window.showInputBox().then(makeInputStr);
         }
     }
 
-    protected matchLine(line: string): string | undefined{
-        if(this._inputstring === undefined){
+    protected matchLine(line: string): string | undefined {
+        if (this._inputstring === undefined) {
             return undefined;
         }
-        if(this.notcontain){
-            if(line.indexOf(this._inputstring) === -1){
+        if (this.notcontain) {
+            if (line.indexOf(this._inputstring) === -1) {
                 return line;
             }
-        }else{
-            if(line.indexOf(this._inputstring) !== -1){
+        } else {
+            if (line.indexOf(this._inputstring) !== -1) {
                 return line;
             }
         }
         return undefined;
     }
 
-    dispose(){
+    dispose() {
     }
 
 }

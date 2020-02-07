@@ -1,0 +1,112 @@
+{
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": 0,
+        "quotes": [
+            "error",
+            "single",
+            { "avoidEscape": true }
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-irregular-whitespace": "warn",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 2,
+                "maxEOF": 1
+            }
+        ],
+        "brace-style": [
+            "error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "no-spaced-func": "error",
+        "semi-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "block-spacing": "error",
+        "space-in-parens": [
+            "error",
+            "never"
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "space-before-blocks": [
+            "error",
+            {
+                "functions": "always",
+                "keywords": "always",
+                "classes": "always"
+            }
+        ],
+        "keyword-spacing": "error",
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "no-multi-spaces": [
+            "error",
+            {
+                "exceptions": {
+                    "Property": true
+                }
+            }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars-experimental": 1,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/no-empty-function": "warn"
+    }
+}
