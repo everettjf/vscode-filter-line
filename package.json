@@ -2,7 +2,7 @@
     "name": "filter-line",
     "displayName": "Filter Line",
     "description": "Filter line by strings or regular expressions",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "publisher": "everettjf",
     "license": "MIT",
     "engines": {
