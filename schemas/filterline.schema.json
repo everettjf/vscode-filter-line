@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Filter Line configuration",
+  "description": "Legacy rules or named filter presets. Without type, rules are regular expressions.",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/config"
+    },
+    {
+      "type": "object",
+      "required": [
+        "presets"
+      ],
+      "properties": {
+        "presets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/config"
+              },
+              {
+                "required": [
+                  "name"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "config": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "caseSensitive": {
+              "type": "boolean",
+              "default": true
+            },
+            "before": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "after": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "type": {
+              "enum": [
+                "stringlist",
+                "regexlist",
+                "stringlist_notcontainany",
+                "regexlist_notmatchany"
+              ],
+              "default": "regexlist"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "rules"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "caseSensitive": {
+              "type": "boolean",
+              "default": true
+            },
+            "before": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "after": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "type": {
+              "const": "general"
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string"
+                  },
+                  "dest": {
+                    "type": "string"
+                  },
+                  "tag": {
+                    "type": "string"
+                  },
+                  "flag": {
+                    "type": "string"
+                  },
+                  "until": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "src"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "type",
+            "rules"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "caseSensitive": {
+              "type": "boolean",
+              "default": true
+            },
+            "before": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "after": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 0
+            },
+            "type": {
+              "const": "combined"
+            },
+            "regex": {
+              "type": "boolean",
+              "default": false
+            },
+            "match": {
+              "enum": [
+                "any",
+                "all"
+              ],
+              "default": "any"
+            },
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exclude": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

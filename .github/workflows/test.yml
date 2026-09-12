@@ -1,0 +1,32 @@
+name: Test
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        vscode: ["1.96.0", stable]
+    runs-on: ${{ matrix.os }}
+    env:
+      VSCODE_TEST_VERSION: ${{ matrix.vscode }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: xvfb-run -a npm run test:integration
+        if: runner.os == 'Linux'
+      - run: npm run test:integration
+        if: runner.os != 'Linux'
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: filter-line-${{ matrix.os }}-${{ matrix.vscode }}
+          path: '*.vsix'

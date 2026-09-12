@@ -1,108 +1,187 @@
 {
-    "name": "filter-line",
-    "displayName": "Filter Line",
-    "description": "Filter line by strings or regular expressions",
-    "version": "2.0.1",
-    "publisher": "everettjf",
-    "license": "MIT",
-    "engines": {
-        "vscode": "^1.24.0"
-    },
-    "categories": [
-        "Formatters",
-        "Other"
+  "name": "filter-line",
+  "displayName": "Filter Line",
+  "description": "Filter line by strings or regular expressions",
+  "version": "3.0.0",
+  "publisher": "everettjf",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.filterLineByInputString",
+        "title": "Filter Line By Input String"
+      },
+      {
+        "command": "extension.filterLineByInputRegex",
+        "title": "Filter Line By Input Regex"
+      },
+      {
+        "command": "extension.filterLineByNotContainInputString",
+        "title": "Filter Line By Not Contain Input String"
+      },
+      {
+        "command": "extension.filterLineByNotMatchInputRegex",
+        "title": "Filter Line By Not Match Input Regex"
+      },
+      {
+        "command": "extension.filterLineByConfigFile",
+        "title": "Filter Line By Config File"
+      },
+      {
+        "command": "extension.filterLineBy",
+        "title": "Filter Line By..."
+      },
+      {
+        "command": "filterLine.chooseFile",
+        "title": "Choose File",
+        "category": "Filter Line"
+      },
+      {
+        "command": "filterLine.goToSource",
+        "title": "Go to Source Line",
+        "category": "Filter Line"
+      },
+      {
+        "command": "filterLine.savedPresets",
+        "title": "Use Saved Preset",
+        "category": "Filter Line"
+      },
+      {
+        "command": "filterLine.savePreset",
+        "title": "Save Last Filter as Preset",
+        "category": "Filter Line"
+      },
+      {
+        "command": "filterLine.clearHistory",
+        "title": "Clear History",
+        "category": "Filter Line"
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.filterLineByInputString",
-        "onCommand:extension.filterLineByInputRegex",
-        "onCommand:extension.filterLineByNotContainInputString",
-        "onCommand:extension.filterLineByNotMatchInputRegex",
-        "onCommand:extension.filterLineByConfigFile",
-        "onCommand:extension.filterLineBy"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.filterLineByInputString",
-                "title": "Filter Line By Input String"
-            },
-            {
-                "command": "extension.filterLineByInputRegex",
-                "title": "Filter Line By Input Regex"
-            },
-            {
-                "command": "extension.filterLineByNotContainInputString",
-                "title": "Filter Line By Not Contain Input String"
-            },
-            {
-                "command": "extension.filterLineByNotMatchInputRegex",
-                "title": "Filter Line By Not Match Input Regex"
-            },
-            {
-                "command": "extension.filterLineByConfigFile",
-                "title": "Filter Line By Config File"
-            },
-            {
-                "command": "extension.filterLineBy",
-                "title": "Filter Line By..."
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "when": "!explorerResourceIsFolder",
-                    "command": "extension.filterLineBy",
-                    "group": "4_filterLine@1"
-                }
-            ],
-            "editor/title/context": [
-                {
-                    "when": "!explorerResourceIsFolder",
-                    "command": "extension.filterLineBy",
-                    "group": "4_filterLine@1"
-                }
-            ]
-        },
-        "configuration": {
-            "title": "Filter Line",
-            "properties": {
-                "filter-line.historySize": {
-                    "type": "integer",
-                    "default": 10,
-                    "minimum": 1,
-                    "maximum": 50,
-                    "scope": "application",
-                    "description": "Filter patterns history size"
-                }
-            }
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "!explorerResourceIsFolder",
+          "command": "extension.filterLineBy",
+          "group": "4_filterLine@1"
         }
+      ],
+      "editor/title/context": [
+        {
+          "when": "!explorerResourceIsFolder",
+          "command": "extension.filterLineBy",
+          "group": "4_filterLine@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "extension.filterLineBy",
+          "when": "editorTextFocus",
+          "group": "1_modification@10"
+        },
+        {
+          "command": "filterLine.goToSource",
+          "when": "editorTextFocus",
+          "group": "navigation@10"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "configuration": {
+      "title": "Filter Line",
+      "properties": {
+        "filter-line.historySize": {
+          "type": "integer",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 50,
+          "scope": "application",
+          "description": "Filter patterns history size"
+        },
+        "filter-line.caseSensitive": {
+          "type": "boolean",
+          "default": true,
+          "description": "Match case by default."
+        },
+        "filter-line.contextBefore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000,
+          "default": 0,
+          "description": "Number of context lines to retain before matches."
+        },
+        "filter-line.contextAfter": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000,
+          "default": 0,
+          "description": "Number of context lines to retain after matches."
+        },
+        "filter-line.maxOpenResultMiB": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 64,
+          "default": 8,
+          "description": "Larger results are saved to a new file and opened only on request."
+        }
+      }
     },
-    "devDependencies": {
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^12.7.5",
-        "vscode": "^1.1.36",
-        "tslint": "^5.12.1",
-        "typescript": "^2.9.2"
+    "jsonValidation": [
+      {
+        "fileMatch": "**/.vscode/filterline.json",
+        "url": "./schemas/filterline.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node scripts/clean.cjs && tsc -p .",
+    "watch": "tsc -w -p .",
+    "lint": "eslint src",
+    "test": "npm run compile && node scripts/test.cjs",
+    "test:integration": "npm run compile && vscode-test",
+    "package": "npm run lint && vsce package",
+    "benchmark": "npm run compile && node scripts/benchmark.cjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "1.96.0",
+    "@types/mocha": "^10.0.0",
+    "typescript": "~5.9.3",
+    "eslint": "^9.39.0",
+    "typescript-eslint": "^8.70.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.9.2",
+    "mocha": "^11.0.0",
+    "ajv": "^6.15.0"
+  },
+  "icon": "images/icon.png",
+  "bugs": {
+    "url": "https://github.com/everettjf/vscode-filter-line/issues",
+    "email": "everettjf@live.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/everettjf/vscode-filter-line.git"
+  },
+  "homepage": "https://github.com/everettjf/vscode-filter-line",
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "virtualWorkspaces": {
+      "supported": "limited",
+      "description": "Editor buffers and workspace configuration are supported. Streaming large files requires a local filesystem on the extension host."
     },
-    "icon": "images/icon.png",
-    "bugs": {
-        "url": "https://github.com/everettjf/vscode-filter-line/issues",
-        "email": "everettjf@live.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/everettjf/vscode-filter-line.git"
-    },
-    "homepage": "https://github.com/everettjf/vscode-filter-line",
-    "dependencies": {
-        "eoml": "^1.0.2"
+    "untrustedWorkspaces": {
+      "supported": true
     }
+  }
 }
