@@ -1,0 +1,10 @@
+{
+  "maxRssMiB": 256,
+  "minThroughputMiBps": 8,
+  "maxMainLoopMs": 500,
+  "maxPreviewMs": 1000,
+  "maxScalingRssGrowthMiB": 64,
+  "minScalingThroughputRatio": 0.4,
+  "maxDenseContextRatio": 3,
+  "maxLongLineRatio": 3
+}

@@ -152,6 +152,7 @@ npm run lint
 npm test
 npm run test:integration
 npm run benchmark
+npm run test:performance
 npm run package
 ```
 
@@ -160,7 +161,8 @@ Integration tests run an isolated VS Code with two workspace fixtures. Set
 select a downloaded release. Linux requires a display, e.g. `xvfb-run -a npm run test:integration`.
 CI defines runs on Linux, macOS and Windows. `BENCHMARK_MIB=512 npm run benchmark`
 changes the reproducible all-match stress case size. See [upgrade verification](docs/UPGRADE.md)
-for actual local results and limitations.
+for actual local results and limitations. [Performance guardrails](docs/PERFORMANCE.md)
+define the enforced streaming, preview, memory and scaling budgets.
 
 Install a locally built `.vsix` with **Extensions: Install from VSIX…**.
 Packaging does not publish to Marketplace.

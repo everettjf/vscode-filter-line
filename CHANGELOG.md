@@ -3,6 +3,7 @@ All notable changes to the "filter-line" extension will be documented in this fi
 
 
 ## [3.0.0]
+- Linear chunk scanning and context buffering; bounded preview transfer, reproducible performance budgets and a CI performance gate.
 - Live sampled previews with regex, case, inverse and context controls.
 - Filter unsaved/Untitled buffers and selected whole lines; direct large-file picker.
 - Worker-based processing, cancellation, progress and bounded writes.

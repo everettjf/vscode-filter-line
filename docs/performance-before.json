@@ -1,0 +1,121 @@
+{
+  "date": "2026-09-13T02:27:55.473Z",
+  "node": "v23.11.0",
+  "platform": "darwin/arm64",
+  "budgets": {
+    "maxRssMiB": 256,
+    "minThroughputMiBps": 8,
+    "maxMainLoopMs": 500,
+    "maxPreviewMs": 1000,
+    "maxScalingRssGrowthMiB": 64,
+    "minScalingThroughputRatio": 0.4,
+    "maxDenseContextRatio": 3,
+    "maxLongLineRatio": 3
+  },
+  "reports": [
+    {
+      "name": "all-64",
+      "inputMiB": 64.21875,
+      "seconds": 0.713111709,
+      "throughputMiBps": 90.05426385447277,
+      "peakRssMiB": 86.796875,
+      "mainLoopMaxMs": 12.107775,
+      "scanned": 561152,
+      "matched": 561152,
+      "verified": true
+    },
+    {
+      "name": "all-256",
+      "inputMiB": 256.171875,
+      "seconds": 2.6583565,
+      "throughputMiBps": 96.36475581811544,
+      "peakRssMiB": 86.5,
+      "mainLoopMaxMs": 12.115967,
+      "scanned": 2238464,
+      "matched": 2238464,
+      "verified": true
+    },
+    {
+      "name": "none",
+      "inputMiB": 64.21875,
+      "seconds": 0.471486083,
+      "throughputMiBps": 136.20497468638962,
+      "peakRssMiB": 83.1875,
+      "mainLoopMaxMs": 12.099583,
+      "scanned": 561152,
+      "matched": 0,
+      "verified": true
+    },
+    {
+      "name": "sparse",
+      "inputMiB": 64.21875,
+      "seconds": 0.48354199999999997,
+      "throughputMiBps": 132.80904244098755,
+      "peakRssMiB": 84.0625,
+      "mainLoopMaxMs": 12.107775,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "regex",
+      "inputMiB": 64.21875,
+      "seconds": 0.481567042,
+      "throughputMiBps": 133.3537065437298,
+      "peakRssMiB": 84.40625,
+      "mainLoopMaxMs": 12.091391,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "context-sparse",
+      "inputMiB": 64.21875,
+      "seconds": 0.498544,
+      "throughputMiBps": 128.81260229789146,
+      "peakRssMiB": 84.796875,
+      "mainLoopMaxMs": 12.156927,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "context-dense-1000",
+      "inputMiB": 64.21875,
+      "seconds": 5.530959209,
+      "throughputMiBps": 11.610779897906855,
+      "peakRssMiB": 97.609375,
+      "mainLoopMaxMs": 12.255231,
+      "scanned": 561152,
+      "matched": 561152,
+      "verified": true
+    },
+    {
+      "name": "preview-256",
+      "inputMiB": 256.171875,
+      "seconds": 0.027124,
+      "throughputMiBps": 9444.47260728506,
+      "peakRssMiB": 57.671875,
+      "mainLoopMaxMs": 10.878975,
+      "scanned": 2184,
+      "matched": 1,
+      "verified": true
+    },
+    {
+      "name": "long-line-1MiB",
+      "seconds": 0.648061667,
+      "peakRssMiB": 87.6875,
+      "verified": true
+    },
+    {
+      "name": "long-line-8MiB",
+      "seconds": 3.4533389580000002,
+      "peakRssMiB": 123.3125,
+      "verified": true
+    }
+  ],
+  "failures": [
+    "Dense context rescans already emitted lines",
+    "Long-line scanning/copying is superlinear"
+  ]
+}

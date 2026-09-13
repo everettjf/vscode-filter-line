@@ -38,13 +38,13 @@ of this upgrade.
 | Cancellation and cleanup | Pathological regex cancelled in a worker; real host cancellation/failure cleanup, large results complete without opening/replacing files |
 | Toolchain and package | Clean `npm ci`, TypeScript build, ESLint, VSIX inspection and final packaged-code extension-host run |
 
-- `npm test`: **25 passed**, none skipped. Includes schema, worker and filesystem tests.
+- `npm test`: **28 passed**, none skipped. Includes schema, worker and filesystem tests.
 - `npm run lint`: passed. `git diff --check`: passed.
 - Source extension-host suite: **10 passed** on VS Code **1.96.0** and **1.135.0**, macOS arm64.
 - Final VSIX was extracted and loaded as the development extension in VS Code **1.96.0**: **10 passed**. This checks the actual delivered modules rather than assuming a source run proves packaging.
 - The packaged-run cancellation test was updated to assert the cancellation message instead of comparing constructors from two different copies of the extension.
 - Final VSIX: `filter-line-3.0.0.vsix`, 21 archive files, approximately 31 KiB, no runtime npm dependencies and no bundled tests/source/dependency tree.
-- VSIX SHA-256: `365b4e07d3086483707f8e5f33c7069a8575265ba6728a9aeabe0de53b21ee63`.
+- VSIX SHA-256: `c68f4dd184f2a5fd5da6f65899985a415d46b8fdcc5d84404a02a0ea339165e3`.
 
 ## Reproducible performance checks
 
@@ -55,9 +55,9 @@ The benchmark hashes both files and checks match count and mapping-file size.
 | Input | Lines (all match) | Elapsed | Peak process RSS | Verification |
 | --- | ---: | ---: | ---: | --- |
 | 128.953 MiB | 1,032,192 | 1.406 s | 89.7 MiB | Identical input/output SHA-256 |
-| 512.742 MiB (final core) | 4,104,192 | 5.650 s | 90.1 MiB | Identical input/output SHA-256 |
+| 512.742 MiB (initial 3.0 core) | 4,104,192 | 5.650 s | 90.1 MiB | Identical input/output SHA-256 |
 
-Final 512 MiB output SHA-256:
+Initial 3.0 benchmark output SHA-256:
 `e47796e6978468d091c9b8f08c0e38aec63bdd5ac2ddaf96a32027168179ba70`.
 
 The npm registry was unreachable from this environment at first; installation used
@@ -77,3 +77,11 @@ for normal development and CI. The extension itself was exercised in both VS Cod
 - Large-file publication requires hard-link support. Context/line/worker memory limits
   are explicit, and preview counts are labelled when sampled.
 - The historical tag and upgrade are local. No Marketplace release or remote push was performed.
+
+## Performance follow-up
+
+The subsequent performance pass replaces repeated chunk scanning and redundant
+context scans with linear processing, and bounds preview structured-clone payloads.
+All 28 core tests and 11 enforcing performance cases passed locally. See
+[performance contract and before/after results](PERFORMANCE.md). The updated VSIX
+was again tested in VS Code 1.96.0 with all 10 integration tests passing.

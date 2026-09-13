@@ -126,3 +126,30 @@ test('context remains bounded for unusually long lines', async () => {
     const stats = { scanned: 0, matched: 0, emitted: 0 };
     await assert.rejects(collect(filterLines(lines(chunks(['x'.repeat(1024 * 1024) + '\n'].flatMap(line => Array(20).fill(line)))), () => undefined, 20, 0, stats)), /Context exceeds/);
 });
+
+test('context ring matches an independent reference across dense, sparse and overlapping matches', async () => {
+    const data = Array.from({ length: 137 }, (_, index) => `line ${index}`);
+    for (const before of [0, 1, 3, 10, 1000]) {
+        for (const after of [0, 2, 11]) {
+            for (const spacing of [1, 3, 17]) {
+                const matched = data.map((_, i) => i).filter(i => i % spacing === 0);
+                const expected = data.map((_, i) => i).filter(i => matched.some(m => i >= m - before && i <= m + after));
+                const stats = { scanned: 0, matched: 0, emitted: 0 };
+                const actual = await collect(filterLines(lines(chunks([data.join('\n')])), line => Number(line.slice(5)) % spacing === 0 ? line : undefined, before, after, stats));
+                assert.deepEqual(actual.map(line => line.number), expected);
+                assert.equal(stats.matched, matched.length);
+                assert.equal(stats.emitted, expected.length);
+            }
+        }
+    }
+});
+
+test('fragmented long lines and deferred CR tolerate empty chunks and exact limits', async () => {
+    const parts = ['abc', '', 'def', '\r', '', '\n', '\r', '', 'last'];
+    assert.deepEqual(await collect(lines(chunks(parts), 6)), [
+        { text: 'abcdef', eol: '\r\n', number: 0 },
+        { text: '', eol: '\r', number: 1 },
+        { text: 'last', eol: '', number: 2 },
+    ]);
+    await assert.rejects(collect(lines(chunks(['abc', 'def', 'g\n']), 6)), /line exceeds/);
+});

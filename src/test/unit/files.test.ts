@@ -124,3 +124,12 @@ test('cancellation before publication leaves no result or staging directory', as
     await assert.rejects(publishOutput(complete, path.join(directory, 'source.log'), () => ++checks >= 2), Cancelled);
     assert.deepEqual(await readdir(directory), ['complete']);
 }));
+
+test('large buffer previews remain sampled and preserve truncation after transfer limiting', async () => {
+    const job = startJob({ source: { text: 'match\n'.repeat(1000000) }, options: { ...defaults, pattern: 'match' }, preview: true });
+    const result = await job.result;
+    assert.equal(result.truncated, true);
+    assert.equal(result.scanned, 5000);
+    assert.equal(result.preview.length, 30);
+    assert.ok(result.bytes <= 262144);
+});

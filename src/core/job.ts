@@ -4,6 +4,7 @@ import { TextDecoder } from 'node:util';
 import { lines, filterLines, FilterStats } from './lines';
 import { configContext, configMatcher, PatternOptions, patternMatcher } from './rules';
 
+export const PREVIEW_TEXT_LIMIT = 256 * 1024;
 export type Source = { path: string } | { text: string };
 export interface Job {
     source: Source;
@@ -31,7 +32,7 @@ export async function runJob(job: Job, report: (progress: Progress) => void = ()
     if (initial && !initial.isFile()) { throw new Error('Choose a regular file'); }
     async function* chunks(): AsyncGenerator<string> {
         if ('text' in job.source) {
-            const limit = job.preview ? 256 * 1024 : job.source.text.length;
+            const limit = job.preview ? PREVIEW_TEXT_LIMIT : job.source.text.length;
             result.truncated = job.source.text.length > limit;
             for (let offset = 0; offset < Math.min(limit, job.source.text.length); offset += 64 * 1024) {
                 const text = job.source.text.slice(offset, Math.min(offset + 64 * 1024, limit));

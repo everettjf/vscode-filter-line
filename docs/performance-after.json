@@ -1,0 +1,129 @@
+{
+  "date": "2026-09-13T02:30:50.514Z",
+  "node": "v23.11.0",
+  "platform": "darwin/arm64",
+  "budgets": {
+    "maxRssMiB": 256,
+    "minThroughputMiBps": 8,
+    "maxMainLoopMs": 500,
+    "maxPreviewMs": 1000,
+    "maxScalingRssGrowthMiB": 64,
+    "minScalingThroughputRatio": 0.4,
+    "maxDenseContextRatio": 3,
+    "maxLongLineRatio": 3
+  },
+  "reports": [
+    {
+      "name": "all-64",
+      "inputMiB": 64.21875,
+      "seconds": 0.49806262500000004,
+      "throughputMiBps": 128.93709902444496,
+      "peakRssMiB": 86.609375,
+      "mainLoopMaxMs": 12.107775,
+      "scanned": 561152,
+      "matched": 561152,
+      "verified": true
+    },
+    {
+      "name": "all-256",
+      "inputMiB": 256.171875,
+      "seconds": 1.81868775,
+      "throughputMiBps": 140.85533649192942,
+      "peakRssMiB": 86.25,
+      "mainLoopMaxMs": 12.394495,
+      "scanned": 2238464,
+      "matched": 2238464,
+      "verified": true
+    },
+    {
+      "name": "none",
+      "inputMiB": 64.21875,
+      "seconds": 0.27540533300000003,
+      "throughputMiBps": 233.17903578867876,
+      "peakRssMiB": 68.984375,
+      "mainLoopMaxMs": 12.099583,
+      "scanned": 561152,
+      "matched": 0,
+      "verified": true
+    },
+    {
+      "name": "sparse",
+      "inputMiB": 64.21875,
+      "seconds": 0.282002458,
+      "throughputMiBps": 227.72407891565257,
+      "peakRssMiB": 82.875,
+      "mainLoopMaxMs": 12.124159,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "regex",
+      "inputMiB": 64.21875,
+      "seconds": 0.27946966599999995,
+      "throughputMiBps": 229.78790835925645,
+      "peakRssMiB": 83.15625,
+      "mainLoopMaxMs": 12.091391,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "context-sparse",
+      "inputMiB": 64.21875,
+      "seconds": 0.29079087499999995,
+      "throughputMiBps": 220.84169594386347,
+      "peakRssMiB": 85,
+      "mainLoopMaxMs": 12.099583,
+      "scanned": 561152,
+      "matched": 274,
+      "verified": true
+    },
+    {
+      "name": "context-dense-1000",
+      "inputMiB": 64.21875,
+      "seconds": 0.494298542,
+      "throughputMiBps": 129.91895492987314,
+      "peakRssMiB": 86.84375,
+      "mainLoopMaxMs": 12.115967,
+      "scanned": 561152,
+      "matched": 561152,
+      "verified": true
+    },
+    {
+      "name": "preview-256",
+      "inputMiB": 256.171875,
+      "seconds": 0.018629542000000002,
+      "throughputMiBps": null,
+      "peakRssMiB": 47.671875,
+      "mainLoopMaxMs": 0,
+      "scanned": 2184,
+      "matched": 1,
+      "verified": true
+    },
+    {
+      "name": "preview-buffer-64",
+      "inputMiB": 64.21875,
+      "seconds": 0.015905875,
+      "throughputMiBps": null,
+      "peakRssMiB": 176.484375,
+      "mainLoopMaxMs": 0,
+      "scanned": 0,
+      "matched": 0,
+      "verified": true
+    },
+    {
+      "name": "long-line-1MiB",
+      "seconds": 0.07432775,
+      "peakRssMiB": 75.578125,
+      "verified": true
+    },
+    {
+      "name": "long-line-8MiB",
+      "seconds": 0.073879125,
+      "peakRssMiB": 132.234375,
+      "verified": true
+    }
+  ],
+  "failures": []
+}

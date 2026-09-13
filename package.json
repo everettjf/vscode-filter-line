@@ -147,7 +147,8 @@
     "test": "npm run compile && node scripts/test.cjs",
     "test:integration": "npm run compile && vscode-test",
     "package": "npm run lint && vsce package",
-    "benchmark": "npm run compile && node scripts/benchmark.cjs"
+    "benchmark": "npm run compile && node scripts/benchmark.cjs",
+    "test:performance": "npm run compile && node scripts/performance.cjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

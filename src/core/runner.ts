@@ -1,10 +1,15 @@
 import { Worker } from 'node:worker_threads';
 import * as path from 'node:path';
-import { Job, Progress, Result } from './job';
+import { Job, Progress, Result, PREVIEW_TEXT_LIMIT } from './job';
 
 export class Cancelled extends Error { constructor() { super('Filtering cancelled'); } }
 export function startJob(job: Job, report: (progress: Progress) => void = () => {}): { result: Promise<Result>; cancel: () => void } {
-    const worker = new Worker(path.join(__dirname, '..', 'worker.js'), { workerData: job, resourceLimits: { maxOldGenerationSizeMb: 256 } });
+    // Preserve one extra character so the worker can still label the sample truncated.
+    // Bound the structured clone too, not just the work done after it reaches the worker.
+    const workerData = job.preview && 'text' in job.source
+        ? { ...job, source: { text: job.source.text.slice(0, PREVIEW_TEXT_LIMIT + 1) } }
+        : job;
+    const worker = new Worker(path.join(__dirname, '..', 'worker.js'), { workerData, resourceLimits: { maxOldGenerationSizeMb: 256 } });
     let cancel = () => {};
     const result = new Promise<Result>((resolve, reject) => {
         let settled = false;
