@@ -85,7 +85,10 @@ suite('Filter Line extension host', () => {
         assert.equal(configMatcher(presets[0].config)('alpha'), undefined);
         assert.equal(configMatcher(presets[0].config)('beta'), 'beta');
         const result = await vscode.commands.executeCommand<FilterOutcome>('extension.filterLineByConfigFile', target);
-        assert.equal(result.document!.getText(), 'beta\n');
+        // Untitled results use VS Code's text model, including its platform EOL.
+        const document = result.document!;
+        const eol = document.eol === vscode.EndOfLine.CRLF ? '\r\n' : '\n';
+        assert.equal(document.getText(), `beta${eol}`);
     });
     test('navigation rejects edits to results and sources', async () => {
         const doc = await vscode.workspace.openTextDocument({ content: 'keep' });
