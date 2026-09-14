@@ -6,33 +6,46 @@ back to its original line. All processing stays on your extension host.
 
 Requires VS Code 1.96 or newer. No runtime npm dependencies.
 
-## What's new in 3.0
-
-- **Live preview:** see sample matches while typing, with text/regex, case and inverse controls.
-- **Context lines:** retain surrounding lines and merge overlapping ranges without duplicates.
-- **Filter what you see:** work with unsaved documents, Untitled editors or selected lines.
-- **Large-file processing:** choose a file directly, stream results to disk and cancel running filters.
-- **Reusable rules:** save personal presets or share named include/exclude rules with your workspace.
-- **Source navigation:** jump from a filtered result back to the original line.
-- **Safe output:** create a new result without overwriting the source or earlier results.
+[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=everettjf.filter-line)
+· [What's new](CHANGELOG.md)
+· [Report an issue](https://github.com/everettjf/vscode-filter-line/issues)
 
 ## Installation
 
-The published extension is available on the
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=everettjf.filter-line).
-The 3.0 changes documented here are available in this repository; the local build
-has not yet been published to Marketplace.
+In VS Code, open **Extensions**, search for **Filter Line** by **everettjf**, and
+select **Install**. Existing users can update the same extension to 3.0.
 
-To try this version, run `npm ci` and `npm run package`, then choose
-**Extensions: Install from VSIX…** in VS Code and select `filter-line-3.0.0.vsix`.
-See [development and verification](#development-and-verification) for prerequisites.
+## What's new in 3.0
+
+| Feature | What you can do |
+| --- | --- |
+| Live preview | Check sample matches while typing; switch text/regex, case and inverse matching |
+| Context lines | Keep lines before and after matches, without duplicating overlapping ranges |
+| Unsaved text and selections | Filter your current edits, pasted text or selected lines without saving first |
+| Large files | Choose a file without opening it, stream the output and cancel long-running filters |
+| Personal and workspace presets | Reuse filters or share named include/exclude rules with a project |
+| Source navigation | Jump from a result line to its original location |
+| Safe results | Create a separate result without overwriting the source or previous results |
+
+## Contents
+
+- [Quick start](#quick-start)
+- [Common filtering tasks](#common-filtering-tasks)
+- [Results and source navigation](#results-and-source-navigation)
+- [Presets and workspace configuration](#presets-and-workspace-configuration)
+- [Performance](#performance)
+- [Settings](#settings)
+- [Upgrading from 2.x](#upgrading-from-2x)
+- [Encoding, limits and remote workspaces](#encoding-limits-and-remote-workspaces)
+- [Development and verification](#development-and-verification)
 
 ## Quick start
 
 1. Open a document, or paste text into an Untitled editor. Unsaved changes are supported.
 2. Optionally select the lines to filter. The primary selection is expanded to whole lines;
    an end position at column zero excludes that ending line.
-3. Run **Filter Line By Input String** or **Filter Line By Input Regex**.
+3. Open the Command Palette (**⌘⇧P** on macOS, **Ctrl+Shift+P** on Windows/Linux)
+   and run **Filter Line By Input String** or **Filter Line By Input Regex**.
 4. Type a pattern. The picker shows matching counts and up to 30 preview lines.
    Use the toolbar buttons to switch text/regex, case sensitivity, inverse matching,
    and context lines before/after matches.
@@ -49,19 +62,55 @@ editor buffer, and at most 5,000 lines. Counts explicitly say
 full filtering retains complete lines. Changing the pattern cancels the previous
 preview. Long-running regexes execute in a worker and can be cancelled.
 
-## Files, context and navigation
+## Common filtering tasks
 
-- **Filter Line: Choose File** selects a file without opening it first. This replaces
-  the old empty `filterline` placeholder workaround.
-- Explorer and editor context menus filter the selected target. An already-open
-  target uses its current buffer, including unsaved edits.
-- Context windows merge without duplicating lines. Match counts exclude context-only lines.
-- **Filter Line: Go to Source Line** jumps from the result cursor to its original line.
-  Navigation is available while the result remains open in this session. Editing
-  the result or changing/closing the source buffer invalidates its mapping; filter
-  again to refresh it.
-- **Filter Line: Clear History** clears the locally stored pattern history.
-  Reused patterns move to the front. Legacy history is imported automatically.
+| Task | Command or control |
+| --- | --- |
+| Keep lines containing `ERROR` | **Filter Line By Input String** → enter `ERROR` |
+| Keep lines matching `ERROR\|WARN` | **Filter Line By Input Regex** → enter `ERROR\|WARN` |
+| Remove lines containing `healthcheck` | **Filter Line By Not Contain Input String** |
+| Remove regex matches | **Filter Line By Not Match Input Regex** |
+| Ignore letter case | Toggle case sensitivity in the preview toolbar |
+| Keep surrounding log entries | Set before/after context in the preview toolbar |
+| Process a large file without opening it | **Filter Line: Choose File** |
+| Run shared project rules | **Filter Line By Config File** |
+| Choose a filtering method | **Filter Line By...**, also available in context menus |
+
+For example, filtering this log for `ERROR`:
+
+```text
+10:00 INFO request started
+10:01 ERROR connection timed out
+10:02 INFO retry scheduled
+10:03 INFO healthcheck passed
+```
+
+With one line of context before and after, the result is:
+
+```text
+10:00 INFO request started
+10:01 ERROR connection timed out
+10:02 INFO retry scheduled
+```
+
+This counts as **one match and three output lines**. Overlapping context windows
+merge without duplicating lines. Inverse matching selects nonmatching lines first;
+context settings then add surrounding lines.
+
+Explorer and editor context menus use the selected target. If that target is
+already open, filtering uses its current buffer, including unsaved edits.
+Selections use the primary selection only; multiple selections are not combined.
+
+## Results and source navigation
+
+Results are separate documents or files, so you can compare them with the source.
+Small results open as Untitled documents; larger results are saved without being
+opened automatically. Adjust this threshold with `filter-line.maxOpenResultMiB`.
+
+Place the cursor on a result line and run **Filter Line: Go to Source Line** to
+return to its original location. Navigation is available while the result remains
+open in the current session. Editing the result or changing/closing the source
+buffer invalidates its mapping; filter again to refresh it.
 
 Disk output never replaces the source or a previous result. For `app.log`, saved
 results are named `app.log.filterline.log`, then `app.log.filterline.1.log`, etc.
@@ -70,36 +119,13 @@ before publication. Publication uses a temporary sibling and an exclusive hard l
 so the destination filesystem must support hard links. Cancelled or failed runs
 remove their temporary output.
 
-## Performance
-
-Disk filtering streams input and output instead of loading the entire file into
-memory. Matching runs in a cancellable worker, and previews use a bounded sample.
-Line splitting and context handling avoid repeated scans of growing buffers or
-already-emitted lines.
-
-Measured locally on macOS arm64 with Node.js v23.11.0, before and after the latest
-performance improvements to the 3.0 implementation:
-
-| Workload | Before | After |
-| --- | ---: | ---: |
-| 256 MiB file, all lines match | 2.658 s | 1.819 s |
-| 64 MiB file, dense matches with 1,000 preceding context lines | 5.531 s | 0.494 s |
-| 16 MiB input containing 8 MiB individual lines | 3.453 s | 0.074 s |
-
-These are single-run measurements, not timing guarantees. Normal streaming cases
-used about 86 MiB process RSS, including the worker. The 256 MiB all-match case
-used approximately the same memory as the 64 MiB case.
-
-`npm run test:performance` checks 11 workloads for output correctness, memory,
-throughput, preview latency and scaling regressions. The CI workflow includes this
-suite with enforced budgets. See [performance results and guardrails](docs/PERFORMANCE.md)
-for reproducible commands, raw reports, thresholds and measurement limitations.
-
 ## Presets and workspace configuration
 
 After a successful text/regex filter, run **Filter Line: Save Last Filter as Preset**.
 Give it a unique name, then use **Filter Line: Use Saved Preset** in any workspace.
 These presets, including case, inverse and context settings, are stored locally.
+Recent input patterns are also remembered, and reused patterns move to the front.
+Run **Filter Line: Clear History** to clear pattern history.
 
 For shared project rules, create `.vscode/filterline.json` in the target file's
 workspace and run **Filter Line By Config File**. JSON completion and validation are
@@ -130,7 +156,9 @@ provided automatically. Multiple workspace folders use their own configurations.
 ```
 
 `combined` uses literal strings by default; `regex: true` enables regular expressions.
-Empty `include` matches all lines; any matching `exclude` removes a line. `match`
+Empty `include` matches all lines; any matching `exclude` prevents a line from being
+a direct match. With context enabled, that line can still appear beside another
+match. `match`
 controls whether any or all include rules are required. Matching is case-sensitive
 unless `caseSensitive` is false. `before` and `after` accept integers from 0 to 1000.
 
@@ -145,11 +173,35 @@ Existing configuration types remain supported:
 | `general` | Legacy prefix/capture formatting, `dest`, `tag`, persistent `flag`, inclusive `until` blocks |
 
 When `type` is omitted, it defaults to **regexlist**, matching the legacy code's
-actual behavior. The older README incorrectly described it as `general`.
-See [legacy examples](demo) for all five formats. `.vscode/filterline.eoml` and
+actual behavior. See [legacy examples](demo) for all five formats. `.vscode/filterline.eoml` and
 `.vscode/filterline.txt` remain supported with their original precedence over JSON:
 EOML, then TXT, then JSON. The legacy EOML subset now reports malformed structure
 with line numbers. Configuration files are limited to 1 MiB.
+
+## Performance
+
+Disk filtering streams input and output instead of loading the entire file into
+memory. Matching runs in a cancellable worker, and previews use a bounded sample.
+Line splitting and context handling avoid repeated scans of growing buffers or
+already-emitted lines.
+
+Measured locally on macOS arm64 with Node.js v23.11.0, before and after the latest
+performance improvements to the 3.0 implementation:
+
+| Workload | Before | After |
+| --- | ---: | ---: |
+| 256 MiB file, all lines match | 2.658 s | 1.819 s |
+| 64 MiB file, dense matches with 1,000 preceding context lines | 5.531 s | 0.494 s |
+| 16 MiB input containing 8 MiB individual lines | 3.453 s | 0.074 s |
+
+These are single-run measurements, not timing guarantees. Normal streaming cases
+used about 86 MiB process RSS, including the worker. The 256 MiB all-match case
+used approximately the same memory as the 64 MiB case.
+
+`npm run test:performance` checks 11 workloads for output correctness, memory,
+throughput, preview latency and scaling regressions. The CI workflow includes this
+suite with enforced budgets. See [performance results and guardrails](docs/PERFORMANCE.md)
+for reproducible commands, raw reports, thresholds and measurement limitations.
 
 ## Encoding, limits and remote workspaces
 
@@ -183,11 +235,22 @@ browser extension for vscode.dev.
 
 ## Upgrading from 2.x
 
-All six legacy command IDs remain available. Version 3 intentionally removes implicit
-file replacement and the requirement to save before filtering. Use **Choose File**
-instead of creating a `filterline` placeholder. Existing rules and history remain
-usable. The pre-upgrade repository snapshot is tagged `legacy-v2.0.1-20260912`;
-existing release tags are unchanged.
+The original six command IDs, five legacy configuration types and pattern history
+remain supported. Existing shortcut bindings continue to use the same commands.
+
+| Area | Behavior in 3.0 |
+| --- | --- |
+| VS Code version | Requires 1.96 or newer |
+| Input prompt | Includes live preview and matching controls |
+| Unsaved documents | Filters current editor content without requiring a save |
+| Existing result files | Creates a new result instead of implicitly replacing a file |
+| Large-file workaround | Use **Filter Line: Choose File** instead of an empty `filterline` placeholder |
+| Large results | Above 8 MiB by default, saves a new file and offers **Open Result** |
+| Workspace rules | Resolves configuration from the target file's workspace folder |
+| Malformed configuration | Reports errors, including line numbers for malformed EOML structure |
+
+The pre-upgrade repository snapshot is tagged `legacy-v2.0.1-20260912` locally;
+existing release tags are unchanged. See the [changelog](CHANGELOG.md) for release details.
 
 ## Development and verification
 
@@ -200,19 +263,23 @@ npm test
 npm run test:integration
 npm run benchmark
 npm run test:performance
-npm run package
+npm run package -- --githubBranch master
 ```
 
 Integration tests run an isolated VS Code with two workspace fixtures. Set
 `VSCODE_EXECUTABLE_PATH` to use an existing executable, or `VSCODE_TEST_VERSION` to
 select a downloaded release. Linux requires a display, e.g. `xvfb-run -a npm run test:integration`.
-CI defines runs on Linux, macOS and Windows. `BENCHMARK_MIB=512 npm run benchmark`
+CI checks Linux, macOS and Windows with VS Code 1.96.0 and the current stable release,
+plus a separate performance job. All seven jobs passed for the 3.0 release follow-up
+commit [`168af54`](https://github.com/everettjf/vscode-filter-line/actions/runs/34792956085). `BENCHMARK_MIB=512 npm run benchmark`
 changes the reproducible all-match stress case size. See [upgrade verification](docs/UPGRADE.md)
 for actual local results and limitations. [Performance guardrails](docs/PERFORMANCE.md)
 define the enforced streaming, preview, memory and scaling budgets.
 
-Install a locally built `.vsix` with **Extensions: Install from VSIX…**.
+Install the generated `filter-line-3.0.0.vsix` with **Extensions: Install from VSIX…**.
 Packaging does not publish to Marketplace.
+
+## Support
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=everettjf.filter-line)
 · [Issues](https://github.com/everettjf/vscode-filter-line/issues)
