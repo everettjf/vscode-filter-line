@@ -283,5 +283,4 @@ Packaging does not publish to Marketplace.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=everettjf.filter-line)
 · [Issues](https://github.com/everettjf/vscode-filter-line/issues)
-· [Community](https://discord.gg/eGzEaP6TzR)
 · [Original Chinese introduction](https://everettjf.github.io/2018/07/03/vscode-extension-filter-line/)
